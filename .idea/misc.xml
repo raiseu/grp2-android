@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable-anydpi/ic_right_arrow.xml" value="0.3223958333333333" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable-xhdpi/blue_button.xml" value="0.3515625" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable-xhdpi/gradient_background.xml" value="0.22135416666666666" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable-xhdpi/grey_box.xml" value="0.3515625" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.3223958333333333" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable/ic_baseline_arrow_left_60.xml" value="0.3223958333333333" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/device_name.xml" value="0.30052083333333335" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/obstacle_popup_window.xml" value="0.22" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/robot_popup_window.xml" value="0.30052083333333335" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/menu/main.xml" value="0.36102564102564105" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/menu/main_menu.xml" value="0.275" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

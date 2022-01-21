@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/grey_box">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Select a side"
+        android:textStyle="bold"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="600px"
+        android:layout_height="600px"
+        android:layout_marginTop="50px">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintDimensionRatio="1:1">
+
+            <Button
+                android:id="@+id/obstacleN"
+                android:layout_width="300px"
+                android:layout_height="100px"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
+
+            <Button
+                android:id="@+id/obstacleS"
+                android:layout_width="300px"
+                android:layout_height="100px"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/obstacleW"
+                android:layout_width="100px"
+                android:layout_height="300px"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
+
+            <Button
+                android:id="@+id/obstacleE"
+                android:layout_width="100px"
+                android:layout_height="300px"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

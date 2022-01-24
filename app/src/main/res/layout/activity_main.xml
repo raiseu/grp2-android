@@ -20,12 +20,14 @@
             android:layout_weight="100"
             android:background="@drawable/gradient_background">
 
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
 
         </LinearLayout>
 
@@ -38,6 +40,7 @@
         app:layout_constraintBottom_toBottomOf="@id/constraintLayout"
         android:orientation="vertical">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -45,30 +48,14 @@
 
             <com.example.mdpgrp2.MapGrid
                 android:id="@+id/map"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="595dp"
+                android:layout_height="498dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1.2:1"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-
-            <Button
-                android:id="@+id/reset"
-                android:layout_width="68dp"
-                android:layout_height="62dp"
-                android:background="@drawable/grey_box"
-                android:text="@string/reset"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                app:iconPadding="0dp"
-                app:layout_constraintEnd_toEndOf="@id/map"
-                tools:ignore="MissingConstraints,Suspicious0dp" />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,9 +65,9 @@
 
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="432dp"
+                android:layout_height="278dp"
                 android:layout_marginTop="50dp"
-                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:orientation="vertical">
 
@@ -91,18 +78,18 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:background="@drawable/grey_box" >
+                        android:layout_weight="1"
+                        android:background="@drawable/grey_box"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/position"
                             android:textColor="@color/dark_blue"
-                            android:textStyle="bold"
-                            android:textSize="11sp"/>
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -112,17 +99,17 @@
                             <RelativeLayout
                                 android:id="@+id/xLayout"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/x"
-                                    android:textStyle="bold"
                                     android:textColor="@color/dark_blue"
-                                    android:textSize="12sp" />
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/txtX"
@@ -139,8 +126,8 @@
                             <RelativeLayout
                                 android:id="@+id/yLayout"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -155,11 +142,11 @@
                                     android:id="@+id/txtY"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="-"
-                                    android:textStyle="bold"
                                     android:layout_centerInParent="true"
+                                    android:text="-"
+                                    android:textColor="@color/dark_blue"
                                     android:textSize="14sp"
-                                    android:textColor="@color/dark_blue"/>
+                                    android:textStyle="bold" />
 
                             </RelativeLayout>
 
@@ -169,53 +156,51 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:background="@drawable/grey_box"
                         android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp">
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/grey_box"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/direction"
                             android:textColor="@color/dark_blue"
-                            android:textStyle="bold"
-                            android:textSize="11sp"/>
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txtDirection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:text="-"
                             android:textColor="@color/dark_blue"
                             android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"/>
+                            android:textStyle="bold" />
 
                     </LinearLayout>
-
-
 
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/grey_box"
+                    android:layout_height="68dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp">
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/grey_box"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="11sp"
+                        android:text="@string/robotStatus"
                         android:textColor="@color/dark_blue"
-                        android:textStyle="bold"
-                        android:text="@string/robotStatus"/>
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtRobotStatus"
@@ -228,33 +213,37 @@
                 <FrameLayout
                     android:id="@+id/sample_content_fragment"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="145dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/grey_box"
-                    android:orientation="vertical"
-                    android:layout_marginTop="5dp">
+                    android:orientation="vertical">
 
                 </FrameLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:orientation="vertical"
+                android:layout_width="151dp"
+                android:layout_height="272dp"
                 android:layout_marginTop="50dp"
-                android:layout_marginEnd="30dp">
+                android:layout_marginEnd="30dp"
+                android:layout_weight="0.6"
+                android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintButtons"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp">
+                    android:layout_width="164dp"
+                    android:layout_height="288dp">
 
                     <RelativeLayout
                         android:id="@+id/buttons"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_width="114dp"
+                        android:layout_height="117dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="40dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         tools:ignore="MissingConstraints">
 
                         <ImageButton
@@ -295,6 +284,24 @@
                             android:src="@drawable/ic_baseline_arrow_drop_down_24" />
 
                     </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/reset"
+                        android:layout_width="76dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/grey_box"
+                        android:text="@string/reset"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        app:iconPadding="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/buttons"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.354"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.59" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

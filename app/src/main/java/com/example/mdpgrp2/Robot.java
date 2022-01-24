@@ -124,42 +124,43 @@ public class Robot implements ICoordinate{
         this.theta = theta;
     }
 
+    /*
     // Move Forward robot
-//    public void moveRobotForward(){
-//        int robotDir = this.getTheta();
-//        double newEdge;
-//        if (this.x != -1 && this.y != -1){
-//            switch (robotDir){
-//                case 0:
-//                    newEdge = (this.y + ROBOT_LENGTH/2) + 1;
-//                    if (!(newEdge > 20)){
-//                        this.setY(this.y + 1);
-//                    }
-//                    break;
-//                case 180:
-//                    newEdge = (this.y - ROBOT_LENGTH/2) - 1;
-//                    if (!(newEdge < 0)){
-//                        this.setY(this.y - 1);
-//                    }
-//                    break;
-//                case 90:
-//                    newEdge = (this.x + ROBOT_LENGTH/2) + 1;
-//                    if (!(newEdge > 20)){
-//                        this.setX(this.x + 1);
-//                    }
-//                    break;
-//                case -90:
-//                    newEdge = (this.x - ROBOT_LENGTH/2) - 1;
-//                    if (!(newEdge < 0)){
-//                        this.setX(this.x - 1);
-//                    }
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
-
+    public void moveRobotForward(){
+        int robotDir = this.getTheta();
+        double newEdge;
+        if (this.x != -1 && this.y != -1){
+            switch (robotDir){
+                case 0:
+                    newEdge = (this.y + ROBOT_LENGTH/2) + 1;
+                    if (!(newEdge > 20)){
+                        this.setY(this.y + 1);
+                    }
+                    break;
+                case 180:
+                    newEdge = (this.y - ROBOT_LENGTH/2) - 1;
+                    if (!(newEdge < 0)){
+                        this.setY(this.y - 1);
+                    }
+                   break;
+                case 90:
+                    newEdge = (this.x + ROBOT_LENGTH/2) + 1;
+                    if (!(newEdge > 20)){
+                        this.setX(this.x + 1);
+                    }
+                    break;
+                case -90:
+                   newEdge = (this.x - ROBOT_LENGTH/2) - 1;
+                   if (!(newEdge < 0)){
+                       this.setX(this.x - 1);
+                    }
+                   break;
+               default:
+                   break;
+            }
+      }
+    }
+*/
     // Drive forward given a displacement
     public void moveRobotForward(double displacement){
         int robotDir = this.getTheta();
@@ -182,7 +183,7 @@ public class Robot implements ICoordinate{
                 xChange = -1 * displacement * Math.cos(convertToRadians(robotDir));
                 yChange = -1 * displacement * Math.sin(convertToRadians(robotDir));
             }
-            this.setCoordinates(this.x + (float) xChange, this.y + (float) yChange);
+            this.setCoordinates(this.x + (float) xChange , this.y + (float) yChange);
         }
     }
 

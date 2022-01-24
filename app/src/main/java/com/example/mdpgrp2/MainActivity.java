@@ -3,6 +3,7 @@ package com.example.mdpgrp2;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,14 +11,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.mdpgrp2.bluetoothchat.BluetoothChatFragment;
 
@@ -37,10 +42,17 @@ public class MainActivity extends AppCompatActivity {
     private static MapGrid mapGrid;
     BluetoothChatFragment fragment;
 
+    public boolean tiltChk = false;
+    private Gyroscope gyroscope;
+    MutableLiveData<String> listen = new MutableLiveData<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listen.setValue("Default");
+        gyroscope = new Gyroscope(this);
 
         //drawing of map grid
         mapGrid = findViewById(R.id.map);
@@ -133,7 +145,82 @@ public class MainActivity extends AppCompatActivity {
                 updateRobotPositionText();
             }
         });
+
+        // GYROSCOPE AND TILT SWITCH
+        Switch sw = (Switch) findViewById(R.id.tiltSwitch);
+
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    tiltChk =true;
+                    onResume();
+                    gyroscope.register();
+                } else {
+                    // The toggle is disabled
+                    tiltChk=false;
+                    onPause();
+                }
+            }
+        });
+
+
+        gyroscope.setListener(new Gyroscope.Listener() {
+
+            @Override
+            public void onRotation(float rx, float ry, float rz) {
+                if(rx<-1.0f){
+                    if(listen.getValue() !="Move" ){
+                        listen.setValue("Move");
+                    }
+                }
+                else if (rx>1.0f){
+                    if(listen.getValue() != "Default" ){
+                        listen.setValue("Default");
+                    }
+                }
+                else if(rz<-1.0f){
+                    if(listen.getValue() !="Right" ){
+                        listen.setValue("Right");
+                    }
+                }
+                else if (rz>1.0f){
+                    if(listen.getValue() !="Left" ){
+                        listen.setValue("Left");
+                    }
+                }
+            }
+        });
+
+        listen.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s == "Move"){
+                    if (robot.getX() != -1 && robot.getY() != -1) {
+                        robot.moveRobotForward(1.0);
+                        mapGrid.invalidate();
+                        txtX.setText(String.valueOf(robot.getX()));
+                        txtY.setText(String.valueOf(robot.getY()));
+                        txtDir.setText(String.valueOf(robot.getDirection()));
+                    }
+                    Log.d("MainActivity", "MOVE ");
+                }else if (s=="Left"){
+                    if (robot.getX() != -1 && robot.getY() != -1) {
+                        robot.moveRobotTurnLeft();
+                        mapGrid.invalidate();
+                        txtX.setText(String.valueOf(robot.getX()));
+                        txtY.setText(String.valueOf(robot.getY()));
+                        txtDir.setText(String.valueOf(robot.getDirection()));
+                    }
+                    Log.d("MainActivity", "LEFT");
+                }else{
+                    Log.d("MainActivity", "CHANGE VALUE: "+s);
+                }
+            }
+        });
+
     }
+
 
     public void outgoingMessage(String sendMsg) {
         fragment.sendMsg(sendMsg);
@@ -254,8 +341,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public static void updateRobotPositionText(){
         if (robot.getX() != -1 && robot.getY() != -1){
-            txtX.setText(String.valueOf((int) (robot.getX() * 10)));
-            txtY.setText(String.valueOf((int) (robot.getY() * 10)));
+            txtX.setText(String.valueOf((int) ((robot.getX() *10 - 15)/10)));
+            txtY.setText(String.valueOf((int) ((robot.getY()*10 -15)/10)));
             switch (robot.getTheta()){
                 case 0:
                     txtDir.setText("N");
@@ -288,13 +375,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //gyroscope.register();
+        gyroscope.register();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        gyroscope.unregister();
+        gyroscope.unregister();
     }
 
     @Override

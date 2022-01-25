@@ -1,0 +1,30 @@
+robotstatus:
+- instead of toast msgs convert it to listview
+
+reset button: (DONE)
+- move the reset button 
+
+Joystick:
+- find a way to use it
+
+pic of robot:
+- change the pic
+
+
+obstacles:
+- check if we need pic of the bull's eye and stuff
+
+tilt button:
+- make it work!!!!
+
+
+robot is going out of the map: (kinda done)
+- maybe look into giving pop-up message when it goes out
+
+backward button 
+- does not give proper message
+
+
+CHECK IF THE POSTITION NEEDS TO CHANGE WHEN THE ROBOT TURNS
+- i.e currently coordinates are based off of bottom left cornor, so even if the robot faces south it takes the bottom left cornor.
+

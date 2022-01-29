@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -46,10 +47,14 @@ public class MainActivity extends AppCompatActivity {
     private Gyroscope gyroscope;
     MutableLiveData<String> listen = new MutableLiveData<>();
 
+    //Toolbar bottomSheetToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //bottomSheetToolbar = (Toolbar) this.findViewById(R.id.toolbar);
 
         listen.setValue("Default");
         gyroscope = new Gyroscope(this);
@@ -147,8 +152,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // GYROSCOPE AND TILT SWITCH
-        Switch sw = (Switch) findViewById(R.id.tiltSwitch);
+        //Switch sw = (Switch) findViewById(R.id.tiltSwitch);
 
+        /*
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -163,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        */
 
         gyroscope.setListener(new Gyroscope.Listener() {
 
@@ -319,6 +325,18 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+        /*
+    private void setupBottomSheet() {
+        bottomSheetToolbar.setTitle(R.string.message);
+        final PagerAdapter sectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager(), this, TabItem.CONNECTION, TabItem.MESSAGE);
+        bottomSheetViewPager.setOffscreenPageLimit(1);
+        bottomSheetViewPager.setAdapter(sectionsPagerAdapter);
+        bottomSheetTabLayout.setupWithViewPager(bottomSheetViewPager);
+        BottomSheetUtils.setupViewPager(bottomSheetViewPager);
+    }
+
+*/
+
     // Update the targetID of the obstacle once image recognised
     public static boolean exploreTarget(int obstacleNumber, int targetID){
         // if obstacle number exists in map
@@ -341,8 +359,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public static void updateRobotPositionText(){
         if (robot.getX() != -1 && robot.getY() != -1){
-            txtX.setText(String.valueOf((int) ((robot.getX() *10 - 15)/10)));
-            txtY.setText(String.valueOf((int) ((robot.getY()*10 -15)/10)));
+            txtX.setText(String.valueOf((int) (robot.getX() * 10)));
+            txtY.setText(String.valueOf((int) (robot.getY() * 10)));
             switch (robot.getTheta()){
                 case 0:
                     txtDir.setText("N");
@@ -375,13 +393,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        gyroscope.register();
+        //gyroscope.register();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        gyroscope.unregister();
+        //gyroscope.unregister();
     }
 
     @Override

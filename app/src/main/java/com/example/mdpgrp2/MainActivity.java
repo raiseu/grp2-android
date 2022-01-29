@@ -1,8 +1,14 @@
 package com.example.mdpgrp2;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mdpgrp2.bluetoothchat.BluetoothChatFragment;
@@ -37,10 +44,20 @@ public class MainActivity extends AppCompatActivity {
     private static MapGrid mapGrid;
     BluetoothChatFragment fragment;
 
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
+    private static Context context;
+    ProgressDialog myDialog;
+    private static final String TAG = "Main Activity";
+
+    Toolbar bottomSheetToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //bottomSheetToolbar = (Toolbar) this.findViewById(R.id.toolbar);
 
         //drawing of map grid
         mapGrid = findViewById(R.id.map);
@@ -66,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
+
 
         //Reset Robot
         findViewById(R.id.reset).setOnClickListener(new View.OnClickListener(){
@@ -138,6 +156,51 @@ public class MainActivity extends AppCompatActivity {
     public void outgoingMessage(String sendMsg) {
         fragment.sendMsg(sendMsg);
         //Toast.makeText(getApplicationContext(),sendMsg,Toast.LENGTH_SHORT).show();
+    }
+
+    private BroadcastReceiver mBroadcastReceiver5 = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            BluetoothDevice mDevice = intent.getParcelableExtra("Device");
+            String status = intent.getStringExtra("Status");
+            sharedPreferences();
+
+            if(status.equals("connected")){
+                try {
+                    myDialog.dismiss();
+                } catch(NullPointerException e){
+                    e.printStackTrace();
+                }
+
+                Log.d(TAG, "mBroadcastReceiver5: Device now connected to "+mDevice.getName());
+                Toast.makeText(MainActivity.this, "Device now connected to "+mDevice.getName(), Toast.LENGTH_LONG).show();
+                editor.putString("connStatus", "Connected to " + mDevice.getName());
+//                TextView connStatusTextView = findViewById(R.id.connStatusTextView);
+//                connStatusTextView.setText("Connected to " + mDevice.getName());
+            }
+            else if(status.equals("Disconnected")){
+                //Log.d(TAG, "mBroadcastReceiver5: Disconnected from "+mDevice.getName());
+                //Toast.makeText(MainActivity.this, "Disconnected from "+mDevice.getName(), Toast.LENGTH_LONG).show();
+//                mBluetoothConnection = new BluetoothConnectionService(MainActivity.this);
+//                mBluetoothConnection.startAcceptThread();
+
+                editor.putString("connStatus", "Disconnected");
+//                TextView connStatusTextView = findViewById(R.id.connStatusTextView);
+//                connStatusTextView.setText("Disconnected");
+
+                myDialog.show();
+            }
+            editor.commit();
+        }
+    };
+
+    public static void sharedPreferences() {
+        sharedPreferences = MainActivity.getSharedPreferences(MainActivity.context);
+        editor = sharedPreferences.edit();
+    }
+
+    private static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences("Shared Preferences", Context.MODE_PRIVATE);
     }
 
     public static void showObstaclePopup(Context c, View view, Obstacle obstacle) {
@@ -232,6 +295,17 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    /*
+    private void setupBottomSheet() {
+        bottomSheetToolbar.setTitle(R.string.message);
+        final PagerAdapter sectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager(), this, TabItem.CONNECTION, TabItem.MESSAGE);
+        bottomSheetViewPager.setOffscreenPageLimit(1);
+        bottomSheetViewPager.setAdapter(sectionsPagerAdapter);
+        bottomSheetTabLayout.setupWithViewPager(bottomSheetViewPager);
+        BottomSheetUtils.setupViewPager(bottomSheetViewPager);
+    }
+
+*/
     // Update the targetID of the obstacle once image recognised
     public static boolean exploreTarget(int obstacleNumber, int targetID){
         // if obstacle number exists in map

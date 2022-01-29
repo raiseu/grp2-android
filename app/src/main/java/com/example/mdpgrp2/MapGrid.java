@@ -69,7 +69,7 @@ public class MapGrid extends View {
         whitePaint.setShadowLayer(border, 0, 0, Color.GRAY);
         bluePaint.setColor(Color.BLUE);
         blackPaint.setColor(Color.BLACK);
-        coordinatesPaint.setColor(Color.BLUE);
+        coordinatesPaint.setColor(Color.BLACK);
         coordinatesPaint.setTextSize(20);
         coordinatesPaint.setTextAlign(Paint.Align.CENTER);
         whiteNumber.setColor(Color.WHITE);
@@ -79,7 +79,7 @@ public class MapGrid extends View {
         blackNumber.setTextSize(20);
         blackNumber.setTextAlign(Paint.Align.CENTER);
         yellowPaint.setColor(Color.YELLOW);
-        //greenPaint.setColor(Color.rgb(0, 153, 51));
+        greenPaint.setColor(Color.rgb(0, 153, 51));
     }
                                                               
     @Override
@@ -117,11 +117,11 @@ public class MapGrid extends View {
         float offsetX = padding + border + cellWidth;
         float offsetY = padding + border;
         for (int i = 0; i <= numColumns; i++){
-            canvas.drawLine(offsetX + i * cellWidth, offsetY, offsetX + i * cellWidth, offsetY + cellHeight * numRows, bluePaint);
+            canvas.drawLine(offsetX + i * cellWidth, offsetY, offsetX + i * cellWidth, offsetY + cellHeight * numRows, blackPaint);
         }
 
         for (int i = 0; i <= numRows; i++){
-            canvas.drawLine(offsetX, offsetY + i * cellHeight, offsetX + cellWidth * (numColumns), offsetY + i * cellHeight, bluePaint);
+            canvas.drawLine(offsetX, offsetY + i * cellHeight, offsetX + cellWidth * (numColumns), offsetY + i * cellHeight, blackPaint);
         }
 
         float textSize = this.coordinatesPaint.getTextSize();
@@ -191,7 +191,7 @@ public class MapGrid extends View {
             float bottom = (float) (offsetY + cellHeight * (numRows - y + 0.5));
             if (obstacle.isExplored()){
                 canvas.drawRect(left, top, right, bottom, greenPaint);
-                canvas.drawText(String.valueOf(obstacle.getTargetID()), (float) (left + 0.5 * cellWidth), (float) (top + (cellHeight - textSize)/2 + textSize), blackNumber);
+                canvas.drawText(String.valueOf(obstacle.getTargetID()), (float) (left + 0.5 * cellWidth), (float) (top + (cellHeight - textSize)/2 + textSize), whiteNumber);
             } else{
                 canvas.drawRect(left, top, right, bottom, blackPaint);
                 canvas.drawText(String.valueOf(obstacle.getNumber()), (float) (left + 0.5 * cellWidth), (float) (top + (cellHeight - textSize)/2 + textSize), whiteNumber);

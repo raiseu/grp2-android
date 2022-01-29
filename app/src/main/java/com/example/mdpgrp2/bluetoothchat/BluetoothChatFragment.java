@@ -346,21 +346,28 @@ public class BluetoothChatFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    if (readMessage.split("\\|").length == 2){
-                        String[] splitMessage = readMessage.split("\\|");
-                        if (splitMessage[0].split(",")[0].equals("ROBOT")){
-                            updateRobot(splitMessage[0]);
+                    boolean messageIsCommand = false;
+                    if (readMessage.split(",")[0].equals("ROBOT")){
+                        String[] splitString = readMessage.split(",");
+                        if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1){
+                            if (MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0))){
+                                messageIsCommand = true;
+                            }
+                        } else if (splitString.length == 2){
+                            MainActivity.updateRobotStatus(splitString[1]);
+                            messageIsCommand = true;
                         }
-                        if (splitMessage[1].split(",")[0].equals("TARGET")){
-                            updateTarget(splitMessage[1]);
+                    } else if (readMessage.split(",")[0].equals("TARGET")){
+                        String[] splitString = readMessage.split(",");
+                        if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])){
+                            if (MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]))){
+                                messageIsCommand = true;
+                            }
                         }
-                    } else if (readMessage.split(",")[0].equals("ROBOT")) {
-                        updateRobot(readMessage);
                     }
-                    else {
-                        executeRobotCommand(readMessage);
+                    if (!messageIsCommand){
+                        mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     }
-                    mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -484,6 +491,7 @@ public class BluetoothChatFragment extends Fragment {
     }
 
     private void updateRobot(String readMessage){
+        Log.v("TAG","UPDATING ROBOT");
         String[] splitString = readMessage.split(",");
         if (splitString.length == 4){
             // Initialise variables
@@ -534,8 +542,10 @@ public class BluetoothChatFragment extends Fragment {
     }
 
     private void updateTarget(String readMessage){
+        Log.v("TAG","UPDATING TARGET");
         String[] splitString = readMessage.split(",");
         if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])){
+            Log.v("TAG","INSIDE TARGET");
             MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]));
         }
     }

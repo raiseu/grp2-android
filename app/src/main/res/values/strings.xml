@@ -1,10 +1,11 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- UI items-->
-    <string name="app_name">MDP</string>
+    <string name="app_name">MDP Grp 2</string>
+    <string name="bluetooth">Bluetooth Connection</string>
     <string name="position">Position</string>
-    <string name="direction">Direction</string>
-    <string name="x">X:</string>
-    <string name="y">Y:</string>
+    <string name="direction">Direction : </string>
+    <string name="x">X : </string>
+    <string name="y">Y : </string>
     <string name="challenge1">Find Fastest Route</string>
     <string name="challenge2">Speed Parking</string>
     <string name="robotStatus">Robot Status:</string>
@@ -20,16 +21,23 @@
     <string name="title_not_connected">not connected</string>
 
     <!--  DeviceListActivity -->
-    <string name="scanning">scanning for devices...</string>
-    <string name="select_device">select a device to connect</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="scanning">Scanning for devices...</string>
+    <string name="select_device">Select a device to connect</string>
     <string name="none_paired">No devices have been paired</string>
     <string name="none_found">No devices found</string>
+    <string name="devices_found">Devices found</string>
     <string name="title_paired_devices">Paired Devices</string>
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
+    <string name="connect_a_device">Connect a device</string>
 
     <!-- Options Menu -->
     <string name="secure_connect">Connect a device - Secure</string>
     <string name="insecure_connect">Connect a device - Insecure</string>
     <string name="discoverable">Make discoverable</string>
+
+
+    <string name="message">Message</string>
+
 </resources>

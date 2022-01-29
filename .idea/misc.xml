@@ -7,10 +7,17 @@
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable-xhdpi/blue_button.xml" value="0.3515625" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable-xhdpi/gradient_background.xml" value="0.22135416666666666" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable-xhdpi/grey_box.xml" value="0.3515625" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable/border_black_background.xml" value="0.3828125" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable/border_white_background.xml" value="0.3828125" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.3223958333333333" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable/ic_baseline_arrow_left_60.xml" value="0.3223958333333333" />
-        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/activity_device_list.xml" value="0.2" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/bluetooth_pop_up_window.xml" value="0.25" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/device_adapter_view.xml" value="0.2" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/device_name.xml" value="0.30052083333333335" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/fragment_bluetooth_chat.xml" value="0.17831813576494426" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/message_bot.xml" value="0.5171875" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/obstacle_popup_window.xml" value="0.22" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/robot_popup_window.xml" value="0.30052083333333335" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/menu/main.xml" value="0.36102564102564105" />

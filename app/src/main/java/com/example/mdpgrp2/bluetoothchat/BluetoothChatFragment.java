@@ -103,7 +103,7 @@ public class BluetoothChatFragment extends Fragment {
         // If the adapter is null, then Bluetooth is not supported
         FragmentActivity activity = getActivity();
         if (mBluetoothAdapter == null && activity != null) {
-            Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_SHORT).show();
             activity.finish();
         }
     }
@@ -373,8 +373,11 @@ public class BluetoothChatFragment extends Fragment {
                     // save the connected device's name
                     mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
                     if (null != activity) {
+                        MainActivity.updateBluetoothStatus("Connected to " + mConnectedDeviceName);
                         Toast.makeText(activity, "Connected to "
                                 + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+
+
                     }
                     break;
                 case Constants.MESSAGE_TOAST:

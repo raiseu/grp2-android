@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static TextView txtDir;
     @SuppressLint("StaticFieldLeak")
-    public static TextView txtRobotStatus;
+    public static TextView txtRobotStatus, bluetoothTVStatus;
     private static MapGrid mapGrid;
     BluetoothChatFragment fragment;
 
@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Update Robot Status
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
+
+        bluetoothTVStatus = findViewById(R.id.bluetoothTV);
 
         // Remove shadow of action bar
         getSupportActionBar().setElevation(0);
@@ -347,6 +349,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    // Update the robot status
+    public static void updateBluetoothStatus(String status){
+        //robot.setStatus(status);
+        bluetoothTVStatus.setText(status);
     }
 
     // Update the robot status

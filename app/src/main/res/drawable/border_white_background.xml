@@ -13,13 +13,13 @@
         android:color="@color/black" >
     </stroke>
 
-    <gradient
+<!-- <gradient
         android:startColor="#ffffff"
         android:endColor="#D9DDDC"
         android:type="linear"
         android:angle="135"
         />
-
+-->
 
     <corners
         android:radius="10dp"   >

@@ -2,6 +2,9 @@ package com.example.mdpgrp2;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,8 +22,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -72,10 +77,32 @@ public class MainActivity extends AppCompatActivity {
         //Update Robot Status
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
 
+        /*
         // Remove shadow of action bar
-        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setElevation(0);*/
+        // Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#FF0C57A8"));
+
+        // Set BackgroundDrawable
+        actionBar.setBackgroundDrawable(colorDrawable);
+
+
         // Set layout to shift up when soft keyboard is open
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        ConstraintLayout constraintLayout = findViewById(R.id.mainlayout);
+
+        AnimationDrawable animationDrawable = (AnimationDrawable)  constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -363,16 +390,16 @@ public class MainActivity extends AppCompatActivity {
             txtY.setText(String.valueOf((int) (robot.getY() * 10)));
             switch (robot.getTheta()){
                 case 0:
-                    txtDir.setText("N");
+                    txtDir.setText("NORTH");
                     break;
                 case 90:
-                    txtDir.setText("E");
+                    txtDir.setText("EAST");
                     break;
                 case 180:
-                    txtDir.setText("S");
+                    txtDir.setText("SOUTH");
                     break;
                 case -90:
-                    txtDir.setText("W");
+                    txtDir.setText("WEST");
                     break;
                 default:
                     txtDir.setText(robot.getTheta() + " \u00B0");

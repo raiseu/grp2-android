@@ -194,7 +194,7 @@ public class BluetoothChatFragment extends Fragment {
         });
 
         // Initialize the BluetoothChatService to perform bluetooth connections
-        mChatService = new BluetoothChatService(activity, mHandler);
+       mChatService = new BluetoothChatService(activity, mHandler);
 
         // Initialize the buffer for outgoing messages
         mOutStringBuffer = new StringBuffer();
@@ -313,9 +313,9 @@ public class BluetoothChatFragment extends Fragment {
         actionBar.setSubtitle(subTitle);
     }
 
-    /**
-     * The Handler that gets information back from the BluetoothChatService
-     */
+
+    /// The Handler that gets information back from the BluetoothChatService
+
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

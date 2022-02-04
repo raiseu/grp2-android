@@ -37,6 +37,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     static Robot robot = new Robot();
+    static Obstacle obstacle  = new Obstacle(1);
     @SuppressLint("StaticFieldLeak")
     public static TextView txtX;
     @SuppressLint("StaticFieldLeak")
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean tiltChk = false;
     private Gyroscope gyroscope;
     MutableLiveData<String> listen = new MutableLiveData<>();
+
+    public static void updateBluetoothStatus(String s) {
+    }
 
     //Toolbar bottomSheetToolbar;
 
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnUp).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //if(robot.getX()+30 != obstacle.getX()  && robot.getY()+30 != obstacle.getY()){
                     robot.moveRobotForward(1.0);
                     mapGrid.invalidate();
                     String navi = "f";
@@ -133,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Move forward",
                         Toast.LENGTH_SHORT).show();
                     updateRobotPositionText();
+                //}
             }
         });
 

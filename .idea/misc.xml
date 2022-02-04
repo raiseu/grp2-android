@@ -12,7 +12,7 @@
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.3223958333333333" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/drawable/ic_baseline_arrow_left_60.xml" value="0.3223958333333333" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/activity_device_list.xml" value="0.2" />
-        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/bluetooth_pop_up_window.xml" value="0.25" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/device_adapter_view.xml" value="0.2" />
         <entry key="..\:/MDP_Grp2/MDP/app/src/main/res/layout/device_name.xml" value="0.30052083333333335" />
@@ -48,6 +48,7 @@
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/id_forward_button_pressed.xml" value="0.1240234375" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/id_forward_button_states.xml" value="0.1240234375" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/id_left_button.xml" value="0.14973958333333334" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/id_left_button_pressed.xml" value="0.1" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/id_left_button_states.xml" value="0.1240234375" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/id_reverse_button.xml" value="0.1240234375" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/id_reverse_button_pressed.xml" value="0.1240234375" />
@@ -64,6 +65,8 @@
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/gradient_2.xml" value="0.1621794871794872" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/gradient_3.xml" value="0.1621794871794872" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/gradient_list.xml" value="0.1621794871794872" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/message.xml" value="0.10546875" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/message_bot.xml" value="0.10546875" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/obstacle_popup_window.xml" value="0.3666666666666667" />
       </map>
     </option>

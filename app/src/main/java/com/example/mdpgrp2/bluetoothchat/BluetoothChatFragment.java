@@ -104,6 +104,7 @@ public class BluetoothChatFragment extends Fragment {
         FragmentActivity activity = getActivity();
         if (mBluetoothAdapter == null && activity != null) {
             Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_SHORT).show();
+
             activity.finish();
         }
     }

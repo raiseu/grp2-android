@@ -45,16 +45,13 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static TextView txtDir;
     @SuppressLint("StaticFieldLeak")
-    public static TextView txtRobotStatus;
+    public static TextView txtRobotStatus, bluetoothTVStatus;
     private static MapGrid mapGrid;
     BluetoothChatFragment fragment;
 
     public boolean tiltChk = false;
     private Gyroscope gyroscope;
     MutableLiveData<String> listen = new MutableLiveData<>();
-
-    public static void updateBluetoothStatus(String s) {
-    }
 
     //Toolbar bottomSheetToolbar;
 
@@ -74,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         //Update Robot Pos
         txtX = findViewById(R.id.txtX);
         txtY = findViewById(R.id.txtY);
+
+        bluetoothTVStatus = findViewById(R.id.bluetoothTV);
 
         //Update Robot Direction
         txtDir = findViewById(R.id.txtDirection);
@@ -356,6 +355,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    // Update the robot status
+    public static void updateBluetoothStatus(String status){
+        //robot.setStatus(status);
+        bluetoothTVStatus.setText(status);
     }
 
         /*

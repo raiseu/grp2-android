@@ -3,7 +3,6 @@ package com.example.mdpgrp2;
 import java.util.ArrayList;
 
 public class Map {
-    // Singleton pattern
     private static Map map;
     public static Map getInstance(){
         if (map == null){
@@ -11,11 +10,9 @@ public class Map {
         }
         return map;
     }
-
     private Map(){}
 
     private final ArrayList<com.example.mdpgrp2.Obstacle> obstacles = new ArrayList<>();
-
     public ArrayList<com.example.mdpgrp2.Obstacle> getObstacles(){
         return this.obstacles;
     }

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,21 +13,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.mdpgrp2.bluetoothchat.BluetoothChatFragment;
 
@@ -37,7 +30,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     static Robot robot = new Robot();
-    static Obstacle obstacle  = new Obstacle(1);
     @SuppressLint("StaticFieldLeak")
     public static TextView txtX;
     @SuppressLint("StaticFieldLeak")
@@ -49,22 +41,12 @@ public class MainActivity extends AppCompatActivity {
     private static MapGrid mapGrid;
     BluetoothChatFragment fragment;
 
-    public boolean tiltChk = false;
-    private Gyroscope gyroscope;
-    MutableLiveData<String> listen = new MutableLiveData<>();
-
-    //Toolbar bottomSheetToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //bottomSheetToolbar = (Toolbar) this.findViewById(R.id.toolbar);
-
-        listen.setValue("Default");
-        gyroscope = new Gyroscope(this);
-
         //drawing of map grid
         mapGrid = findViewById(R.id.map);
 
@@ -80,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
         //Update Robot Status
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
 
-        /*
+
         // Remove shadow of action bar
-        getSupportActionBar().setElevation(0);*/
+        //getSupportActionBar().setElevation(0);
         // Define ActionBar object
         ActionBar actionBar;
         actionBar = getSupportActionBar();
@@ -134,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     mapGrid.invalidate();
                     String navi = "f";
                     outgoingMessage(navi);
-                    Toast.makeText(MainActivity.this, "Move forward",
-                        Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Move forward", Toast.LENGTH_SHORT).show();
                     updateRobotPositionText();
                 //}
             }
@@ -149,8 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 mapGrid.invalidate();
                 String navi = "r";
                 outgoingMessage(navi);
-                Toast.makeText(MainActivity.this, "Move backward",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Move backward", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }
         });
@@ -163,8 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 mapGrid.invalidate();
                 String navi = "tl";
                 outgoingMessage(navi);
-                Toast.makeText(MainActivity.this, "Turn Left",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Turn Left", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }
         });
@@ -177,86 +156,10 @@ public class MainActivity extends AppCompatActivity {
                 mapGrid.invalidate();
                 String navi = "tr";
                 outgoingMessage(navi);
-                Toast.makeText(MainActivity.this, "Turn Right",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Turn Right", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }
         });
-
-        // GYROSCOPE AND TILT SWITCH
-        //Switch sw = (Switch) findViewById(R.id.tiltSwitch);
-
-        /*
-        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                    tiltChk =true;
-                    onResume();
-                    gyroscope.register();
-                } else {
-                    // The toggle is disabled
-                    tiltChk=false;
-                    onPause();
-                }
-            }
-        });
-        */
-
-        gyroscope.setListener(new Gyroscope.Listener() {
-
-            @Override
-            public void onRotation(float rx, float ry, float rz) {
-                if(rx<-1.0f){
-                    if(listen.getValue() !="Move" ){
-                        listen.setValue("Move");
-                    }
-                }
-                else if (rx>1.0f){
-                    if(listen.getValue() != "Default" ){
-                        listen.setValue("Default");
-                    }
-                }
-                else if(rz<-1.0f){
-                    if(listen.getValue() !="Right" ){
-                        listen.setValue("Right");
-                    }
-                }
-                else if (rz>1.0f){
-                    if(listen.getValue() !="Left" ){
-                        listen.setValue("Left");
-                    }
-                }
-            }
-        });
-
-        listen.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if(s == "Move"){
-                    if (robot.getX() != -1 && robot.getY() != -1) {
-                        robot.moveRobotForward(1.0);
-                        mapGrid.invalidate();
-                        txtX.setText(String.valueOf(robot.getX()));
-                        txtY.setText(String.valueOf(robot.getY()));
-                        txtDir.setText(String.valueOf(robot.getDirection()));
-                    }
-                    Log.d("MainActivity", "MOVE ");
-                }else if (s=="Left"){
-                    if (robot.getX() != -1 && robot.getY() != -1) {
-                        robot.moveRobotTurnLeft();
-                        mapGrid.invalidate();
-                        txtX.setText(String.valueOf(robot.getX()));
-                        txtY.setText(String.valueOf(robot.getY()));
-                        txtDir.setText(String.valueOf(robot.getDirection()));
-                    }
-                    Log.d("MainActivity", "LEFT");
-                }else{
-                    Log.d("MainActivity", "CHANGE VALUE: "+s);
-                }
-            }
-        });
-
     }
 
 
@@ -327,11 +230,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     // Set robot position based on bluetooth string received
     public static boolean setRobotPosition(float x, float y, char direction){
-        if (0 <= x && x <= 200 && 0 <= y && y <= 200 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')){
+        if (0 <= x && x <= 19 && 0 <= y && y <= 19 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')){
+            x = (float) (x + 0.5);
+            y = (float) (y + 0.5);
             robot.setCoordinates(x, y);
             robot.setDirection(direction);
             switch (direction){
@@ -359,21 +262,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Update the robot status
     public static void updateBluetoothStatus(String status){
-        //robot.setStatus(status);
         bluetoothTVStatus.setText(status);
     }
-
-        /*
-    private void setupBottomSheet() {
-        bottomSheetToolbar.setTitle(R.string.message);
-        final PagerAdapter sectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager(), this, TabItem.CONNECTION, TabItem.MESSAGE);
-        bottomSheetViewPager.setOffscreenPageLimit(1);
-        bottomSheetViewPager.setAdapter(sectionsPagerAdapter);
-        bottomSheetTabLayout.setupWithViewPager(bottomSheetViewPager);
-        BottomSheetUtils.setupViewPager(bottomSheetViewPager);
-    }
-
-*/
 
     // Update the targetID of the obstacle once image recognised
     public static boolean exploreTarget(int obstacleNumber, int targetID){
@@ -397,8 +287,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public static void updateRobotPositionText(){
         if (robot.getX() != -1 && robot.getY() != -1){
-            txtX.setText(String.valueOf((int) (robot.getX() * 10)));
-            txtY.setText(String.valueOf((int) (robot.getY() * 10)));
+            txtX.setText(String.valueOf((int) (robot.getX())));
+            txtY.setText(String.valueOf((int) (robot.getY())));
             switch (robot.getTheta()){
                 case 0:
                     txtDir.setText("NORTH");
@@ -423,31 +313,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Make robot move straight forward or reverse
-    public static void driveRobotStraight(double displacement){
-
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        //gyroscope.register();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //gyroscope.unregister();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-//        Resources res = getResources();
-//        String[] menuOptions = res.getStringArray(R.array.bluetooth_menu);
-//        for (int i = 0; i<menuOptions.length; i++){
-//            menu.add(0, i, 0, menuOptions[i]).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-//        }
         return true;
     }
 

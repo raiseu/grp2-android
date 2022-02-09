@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -59,7 +58,7 @@ public class BluetoothChatService {
     private static ConnectedThread mConnectedThread;
     private int mState;
     private int mNewState;
-    public static boolean BluetoothConnectionStatus=false;
+    //public static boolean BluetoothConnectionStatus=false;
 
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
@@ -290,11 +289,16 @@ public class BluetoothChatService {
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
+
+
         bundle.putString(Constants.TOAST, "Device connection was lost");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
         mState = STATE_NONE;
+
+        //MainActivity.updateBluetoothStatus("Disconnected");
+
         // Update UI title
         updateUserInterfaceTitle();
 

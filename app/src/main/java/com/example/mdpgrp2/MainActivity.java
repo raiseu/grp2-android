@@ -14,11 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,17 +23,29 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.mdpgrp2.bluetoothchat.BluetoothChatFragment;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
+    private static BluetoothChatFragment fragment;
+    Toolbar bottomSheetToolbar;
+
+    private LinearLayout mBottomSheetLayout;
+    private BottomSheetBehavior sheetBehavior;
 
     static Robot robot = new Robot();
+    static FastestPathTimerFragment FPT = new FastestPathTimerFragment();
     static Obstacle obstacle  = new Obstacle(1);
     @SuppressLint("StaticFieldLeak")
     public static TextView txtX;
@@ -47,26 +56,80 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static TextView txtRobotStatus;
     private static MapGrid mapGrid;
-    BluetoothChatFragment fragment;
+    //BluetoothChatFragment fragment;
 
     public boolean tiltChk = false;
-    private Gyroscope gyroscope;
     MutableLiveData<String> listen = new MutableLiveData<>();
+
+
+
+    private BottomSheetBehavior bottomSheetBehavior;
+    TabLayout tabLayout; //bottom_sheet_tabs
+    ViewPager viewPager; //bottom_sheet_viewpager
+
+    TextView timerText;
+    Button startbutton;
+    boolean timerStarted = false;
+    Timer timer;
+    TimerTask timerTask;
+    Double time = 0.0;
 
     public static void updateBluetoothStatus(String s) {
     }
 
-    //Toolbar bottomSheetToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //bottomSheetToolbar = (Toolbar) this.findViewById(R.id.toolbar);
+
+        LinearLayout linearLayout = findViewById(R.id.design_bottom_sheet);
+
+        bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
+
+
+        timerText = (TextView) findViewById(R.id.txtTimer);
+        startbutton = (Button) findViewById(R.id.startbutton);
+        timer  = new Timer();
+
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+        // add the tabs
+        tabLayout.addTab(tabLayout.newTab().setText("FastestPathTimer"));
+        tabLayout.addTab(tabLayout.newTab().setText("ImgRecTimer"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final bottomSheetAdapters adapter = new bottomSheetAdapters(this, getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+
 
         listen.setValue("Default");
-        gyroscope = new Gyroscope(this);
+
 
         //drawing of map grid
         mapGrid = findViewById(R.id.map);
@@ -80,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Update Robot Status
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
+
 
         /*
         // Remove shadow of action bar
@@ -183,53 +247,14 @@ public class MainActivity extends AppCompatActivity {
                 updateRobotPositionText();
             }
         });
-
-        // GYROSCOPE AND TILT SWITCH
-        //Switch sw = (Switch) findViewById(R.id.tiltSwitch);
-
-        /*
-        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                    tiltChk =true;
-                    onResume();
-                    gyroscope.register();
-                } else {
-                    // The toggle is disabled
-                    tiltChk=false;
-                    onPause();
-                }
-            }
-        });
-        */
-
-        gyroscope.setListener(new Gyroscope.Listener() {
-
+/*
+        findViewById(R.id.startbutton).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRotation(float rx, float ry, float rz) {
-                if(rx<-1.0f){
-                    if(listen.getValue() !="Move" ){
-                        listen.setValue("Move");
-                    }
-                }
-                else if (rx>1.0f){
-                    if(listen.getValue() != "Default" ){
-                        listen.setValue("Default");
-                    }
-                }
-                else if(rz<-1.0f){
-                    if(listen.getValue() !="Right" ){
-                        listen.setValue("Right");
-                    }
-                }
-                else if (rz>1.0f){
-                    if(listen.getValue() !="Left" ){
-                        listen.setValue("Left");
-                    }
-                }
+            public void onClick(View view) {
+                startTimer();
             }
         });
+*/
 
         listen.observe(this, new Observer<String>() {
             @Override
@@ -259,9 +284,65 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+/*
+    // fastest path
+    public void startTapped(View view){
+        if(timerStarted == false){
+            timerStarted = true;
+            startbutton.setText("STOP");
+            startbutton.setTextColor(ContextCompat.getColor(this, R.color.baby_blue));
+
+            outgoingMessage("i am moving now"); // check if this is the correct message
+            startTimer();
+
+        }
+        else{
+            timerStarted = false;
+            startbutton.setText("START");
+            startbutton.setTextColor(ContextCompat.getColor(this, R.color.darkBlue));
+
+            timerTask.cancel();
+        }
+    }
+
+    private void startTimer() {
+        timerTask  = new TimerTask() {
+            @Override
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        time++;
+                        timerText.setText(getTimerTask());
+
+                    }
+                });
 
 
-    public void outgoingMessage(String sendMsg) {
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 0, 1000); // 1000ms = 1s
+
+    }
+
+    private String getTimerTask() {
+        int rounded = (int) Math.round(time);
+
+        int seconds = ((rounded % 86400) % 3600) % 60;
+        int minutes = ((rounded % 86400) % 3600) / 60;
+        int hours = ((rounded % 86400) / 3600);
+
+        return formatTime(seconds, minutes, hours);
+    }
+
+    private String formatTime(int seconds, int minutes, int hours) {
+        return String.format("%02d", hours) + " : " + String.format("%02d", minutes) + " : " +  String.format("%02d", seconds);
+    }
+*/
+
+
+    public static void outgoingMessage(String sendMsg) {
         fragment.sendMsg(sendMsg);
         //Toast.makeText(getApplicationContext(),sendMsg,Toast.LENGTH_SHORT).show();
     }
@@ -358,17 +439,6 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-        /*
-    private void setupBottomSheet() {
-        bottomSheetToolbar.setTitle(R.string.message);
-        final PagerAdapter sectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager(), this, TabItem.CONNECTION, TabItem.MESSAGE);
-        bottomSheetViewPager.setOffscreenPageLimit(1);
-        bottomSheetViewPager.setAdapter(sectionsPagerAdapter);
-        bottomSheetTabLayout.setupWithViewPager(bottomSheetViewPager);
-        BottomSheetUtils.setupViewPager(bottomSheetViewPager);
-    }
-
-*/
 
     // Update the targetID of the obstacle once image recognised
     public static boolean exploreTarget(int obstacleNumber, int targetID){
@@ -426,13 +496,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //gyroscope.register();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //gyroscope.unregister();
+
     }
 
     @Override

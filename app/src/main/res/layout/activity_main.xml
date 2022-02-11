@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/constraintLayout"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordinatorLayout"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,12 +9,11 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-
     <LinearLayout
         android:id="@+id/ui"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="@id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="@id/coordinatorLayout"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -129,9 +128,11 @@
 
             <com.example.mdpgrp2.MapGrid
                 android:id="@+id/map"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="747dp"
+                android:layout_height="632dp"
 
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintDimensionRatio="1.2:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/reset" />
@@ -182,13 +183,15 @@
 
             <FrameLayout
                 android:id="@+id/sample_content_fragment"
-                android:layout_width="493dp"
-                android:layout_height="236dp"
+                android:layout_width="491dp"
+                android:layout_height="167dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_white_background"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/robotTV"
-                tools:layout_editor_absoluteX="5dp"></FrameLayout>
+                tools:layout_editor_absoluteX="5dp">
+
+            </FrameLayout>
 
 
             <LinearLayout
@@ -198,7 +201,8 @@
                 android:layout_marginTop="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/robotTV"
-                app:layout_constraintTop_toBottomOf="@+id/map">
+                app:layout_constraintTop_toBottomOf="@+id/map"
+                android:orientation="horizontal">
 
 
             </LinearLayout>
@@ -254,8 +258,8 @@
                     android:layout_marginEnd="157dp"
                     android:layout_marginBottom="80dp"
                     android:background="@drawable/id_left_button_states" />
-            </RelativeLayout>
 
+            </RelativeLayout>
 
             <!--
             <androidx.appcompat.widget.Toolbar
@@ -272,11 +276,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
     </LinearLayout>
 
+    <include layout='@layout/bottomsheet' />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

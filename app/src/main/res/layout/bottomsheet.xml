@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/design_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation='vertical'
+    android:padding='10dp'
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_hideable = "false"
+    app:behavior_peekHeight = "50dp">
+
+
+    <!--<androidx.cardview.widget.CardView
+
+        android:layout_width="718dp"
+        android:layout_height="104dp"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="1dp"
+        app:cardElevation="20dp">-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/dark_blue">
+
+        <!--<View
+                android:layout_width="30dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white" />
+             -->
+        <TextView
+            style='@style/TextAppearance.AppCompat.Headline'
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Timers"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="575dp"
+        android:background="@color/dark_blue">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/white"
+            app:tabTextColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="#050d52"
+            android:layout_marginTop="28dp">
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+
+<!--
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="78dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="538dp"
+            android:layout_marginBottom="305dp"
+            android:background="@color/purple_200"
+            android:onClick="resetTapped"
+            android:text="RESET"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
+
+
+        <Button
+            android:id="@+id/startbutton"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="500dp"
+            android:layout_marginEnd="108dp"
+            android:layout_marginBottom="322dp"
+            android:background="@color/teal_700"
+            android:onClick="startTapped"
+            android:text="START"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/txtTimer"
+            android:layout_width="550dp"
+            android:layout_height="165dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="88dp"
+            android:layout_marginBottom="110dp"
+            android:gravity="center"
+            android:text="00:00:00"
+            android:textColor="@color/light_blue"
+            android:textSize="100dp" />
+
+
+-->
+
+
+    </RelativeLayout>
+
+
+    <!--</androidx.cardview.widget.CardView>-->
+
+
+
+</LinearLayout>

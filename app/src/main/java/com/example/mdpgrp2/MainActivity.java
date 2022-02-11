@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,14 +38,14 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private static BluetoothChatFragment fragment;
-    Toolbar bottomSheetToolbar;
+    //Toolbar bottomSheetToolbar;
 
     private LinearLayout mBottomSheetLayout;
     private BottomSheetBehavior sheetBehavior;
 
     static Robot robot = new Robot();
     static FastestPathTimerFragment FPT = new FastestPathTimerFragment();
-    static Obstacle obstacle  = new Obstacle(1);
+    static Obstacle obstacle = new Obstacle(1);
     @SuppressLint("StaticFieldLeak")
     public static TextView txtX;
     @SuppressLint("StaticFieldLeak")
@@ -59,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean tiltChk = false;
     MutableLiveData<String> listen = new MutableLiveData<>();
 
-
-
     private BottomSheetBehavior bottomSheetBehavior;
     TabLayout tabLayout; //bottom_sheet_tabs
     ViewPager viewPager; //bottom_sheet_viewpager
@@ -71,10 +70,6 @@ public class MainActivity extends AppCompatActivity {
     Timer timer;
     TimerTask timerTask;
     Double time = 0.0;
-
-    public static void updateBluetoothStatus(String s) {
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         timerText = (TextView) findViewById(R.id.txtTimer);
         startbutton = (Button) findViewById(R.id.startbutton);
-        timer  = new Timer();
+        timer = new Timer();
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -123,13 +118,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-        listen.setValue("Default");
-
-
         //drawing of map grid
         mapGrid = findViewById(R.id.map);
 
@@ -146,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
 
 
-
-        /*
         // Remove shadow of action bar
         //getSupportActionBar().setElevation(0);
         // Define ActionBar object
@@ -169,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         ConstraintLayout constraintLayout = findViewById(R.id.mainlayout);
 
-        AnimationDrawable animationDrawable = (AnimationDrawable)  constraintLayout.getBackground();
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
@@ -182,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Reset Robot
-        findViewById(R.id.reset).setOnClickListener(new View.OnClickListener(){
+        findViewById(R.id.reset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mapGrid.removeAllObstacles();
@@ -197,12 +183,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //if(robot.getX()+30 != obstacle.getX()  && robot.getY()+30 != obstacle.getY()){
-                    robot.moveRobotForward(1.0);
-                    mapGrid.invalidate();
-                    String navi = "f";
-                    outgoingMessage(navi);
-                    //Toast.makeText(MainActivity.this, "Move forward", Toast.LENGTH_SHORT).show();
-                    updateRobotPositionText();
+                robot.moveRobotForward(1.0);
+                mapGrid.invalidate();
+                String navi = "f";
+                outgoingMessage(navi);
+                //Toast.makeText(MainActivity.this, "Move forward", Toast.LENGTH_SHORT).show();
+                updateRobotPositionText();
                 //}
             }
         });
@@ -245,6 +231,8 @@ public class MainActivity extends AppCompatActivity {
                 updateRobotPositionText();
             }
         });
+
+
 /*
         findViewById(R.id.startbutton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,32 +242,6 @@ public class MainActivity extends AppCompatActivity {
         });
 */
 
-        listen.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if(s == "Move"){
-                    if (robot.getX() != -1 && robot.getY() != -1) {
-                        robot.moveRobotForward(1.0);
-                        mapGrid.invalidate();
-                        txtX.setText(String.valueOf(robot.getX()));
-                        txtY.setText(String.valueOf(robot.getY()));
-                        txtDir.setText(String.valueOf(robot.getDirection()));
-                    }
-                    Log.d("MainActivity", "MOVE ");
-                }else if (s=="Left"){
-                    if (robot.getX() != -1 && robot.getY() != -1) {
-                        robot.moveRobotTurnLeft();
-                        mapGrid.invalidate();
-                        txtX.setText(String.valueOf(robot.getX()));
-                        txtY.setText(String.valueOf(robot.getY()));
-                        txtDir.setText(String.valueOf(robot.getDirection()));
-                    }
-                    Log.d("MainActivity", "LEFT");
-                }else{
-                    Log.d("MainActivity", "CHANGE VALUE: "+s);
-                }
-            }
-        });
 
     }
 /*
@@ -407,14 +369,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     // Set robot position based on bluetooth string received
-    public static boolean setRobotPosition(float x, float y, char direction){
-        if (0 <= x && x <= 19 && 0 <= y && y <= 19 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')){
+    public static boolean setRobotPosition(float x, float y, char direction) {
+        if (0 <= x && x <= 19 && 0 <= y && y <= 19 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')) {
             x = (float) (x + 0.5);
             y = (float) (y + 0.5);
             robot.setCoordinates(x, y);
             robot.setDirection(direction);
-            switch (direction){
+            switch (direction) {
                 case 'N':
                     robot.setTheta(0);
                     break;
@@ -438,14 +401,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Update the robot status
-    public static void updateBluetoothStatus(String status){
+    public static void updateBluetoothStatus(String status) {
         bluetoothTVStatus.setText(status);
     }
 
     // Update the targetID of the obstacle once image recognised
-    public static boolean exploreTarget(int obstacleNumber, int targetID){
+    public static boolean exploreTarget(int obstacleNumber, int targetID) {
         // if obstacle number exists in map
-        if (1 <= obstacleNumber && obstacleNumber <= Map.getInstance().getObstacles().size()){
+        if (1 <= obstacleNumber && obstacleNumber <= Map.getInstance().getObstacles().size()) {
             Obstacle obstacle = Map.getInstance().getObstacles().get(obstacleNumber - 1);
             obstacle.explore(targetID);
             mapGrid.invalidate();
@@ -455,18 +418,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Update the robot status
-    public static void updateRobotStatus(String status){
+    public static void updateRobotStatus(String status) {
         robot.setStatus(status);
         txtRobotStatus.setText(robot.getStatus());
     }
 
     // Update the coordinates and direction of the robot in textView
     @SuppressLint("SetTextI18n")
-    public static void updateRobotPositionText(){
-        if (robot.getX() != -1 && robot.getY() != -1){
+    public static void updateRobotPositionText() {
+        if (robot.getX() != -1 && robot.getY() != -1) {
             txtX.setText(String.valueOf((int) (robot.getX())));
             txtY.setText(String.valueOf((int) (robot.getY())));
-            switch (robot.getTheta()){
+            switch (robot.getTheta()) {
                 case 0:
                     txtDir.setText("NORTH");
                     break;

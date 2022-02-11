@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static TextView txtDir;
     @SuppressLint("StaticFieldLeak")
-    public static TextView txtRobotStatus;
+    public static TextView txtRobotStatus, bluetoothTVStatus;
     private static MapGrid mapGrid;
     //BluetoothChatFragment fragment;
 
@@ -83,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //bottomSheetToolbar = (Toolbar) this.findViewById(R.id.toolbar);
 
         LinearLayout linearLayout = findViewById(R.id.design_bottom_sheet);
 
@@ -138,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
         txtX = findViewById(R.id.txtX);
         txtY = findViewById(R.id.txtY);
 
+        bluetoothTVStatus = findViewById(R.id.bluetoothTV);
+
         //Update Robot Direction
         txtDir = findViewById(R.id.txtDirection);
 
@@ -145,9 +146,10 @@ public class MainActivity extends AppCompatActivity {
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
 
 
+
         /*
         // Remove shadow of action bar
-        getSupportActionBar().setElevation(0);*/
+        //getSupportActionBar().setElevation(0);
         // Define ActionBar object
         ActionBar actionBar;
         actionBar = getSupportActionBar();
@@ -199,8 +201,7 @@ public class MainActivity extends AppCompatActivity {
                     mapGrid.invalidate();
                     String navi = "f";
                     outgoingMessage(navi);
-                    Toast.makeText(MainActivity.this, "Move forward",
-                        Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Move forward", Toast.LENGTH_SHORT).show();
                     updateRobotPositionText();
                 //}
             }
@@ -214,8 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 mapGrid.invalidate();
                 String navi = "r";
                 outgoingMessage(navi);
-                Toast.makeText(MainActivity.this, "Move backward",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Move backward", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }
         });
@@ -228,8 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 mapGrid.invalidate();
                 String navi = "tl";
                 outgoingMessage(navi);
-                Toast.makeText(MainActivity.this, "Turn Left",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Turn Left", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }
         });
@@ -242,8 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 mapGrid.invalidate();
                 String navi = "tr";
                 outgoingMessage(navi);
-                Toast.makeText(MainActivity.this, "Turn Right",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Turn Right", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }
         });
@@ -409,11 +407,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     // Set robot position based on bluetooth string received
     public static boolean setRobotPosition(float x, float y, char direction){
-        if (0 <= x && x <= 200 && 0 <= y && y <= 200 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')){
+        if (0 <= x && x <= 19 && 0 <= y && y <= 19 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')){
+            x = (float) (x + 0.5);
+            y = (float) (y + 0.5);
             robot.setCoordinates(x, y);
             robot.setDirection(direction);
             switch (direction){
@@ -439,6 +437,10 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    // Update the robot status
+    public static void updateBluetoothStatus(String status){
+        bluetoothTVStatus.setText(status);
+    }
 
     // Update the targetID of the obstacle once image recognised
     public static boolean exploreTarget(int obstacleNumber, int targetID){
@@ -462,8 +464,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public static void updateRobotPositionText(){
         if (robot.getX() != -1 && robot.getY() != -1){
-            txtX.setText(String.valueOf((int) (robot.getX() * 10)));
-            txtY.setText(String.valueOf((int) (robot.getY() * 10)));
+            txtX.setText(String.valueOf((int) (robot.getX())));
+            txtY.setText(String.valueOf((int) (robot.getY())));
             switch (robot.getTheta()){
                 case 0:
                     txtDir.setText("NORTH");
@@ -488,11 +490,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Make robot move straight forward or reverse
-    public static void driveRobotStraight(double displacement){
-
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -508,11 +505,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-//        Resources res = getResources();
-//        String[] menuOptions = res.getStringArray(R.array.bluetooth_menu);
-//        for (int i = 0; i<menuOptions.length; i++){
-//            menu.add(0, i, 0, menuOptions[i]).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-//        }
         return true;
     }
 

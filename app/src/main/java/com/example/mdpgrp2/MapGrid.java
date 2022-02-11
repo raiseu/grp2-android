@@ -39,7 +39,6 @@ public class MapGrid extends View {
     private final Paint blackNumber = new Paint();
     private final Paint yellowPaint = new Paint();
     private final Paint greenPaint = new Paint();
-//    private final Paint exploredWhiteNumber = new Paint();
 
     // Images
     private final Bitmap robotBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.robo1);
@@ -77,7 +76,7 @@ public class MapGrid extends View {
         whiteNumber.setTextAlign(Paint.Align.CENTER);
         blackNumber.setColor(Color.BLACK);
         blackNumber.setTextSize(20);
-        blackNumber.setTextAlign(Paint.Align.CENTER);
+        blackNumber.setTextAlign(Paint.Align.LEFT);
         yellowPaint.setColor(Color.YELLOW);
         greenPaint.setColor(Color.rgb(0, 153, 51));
     }
@@ -98,15 +97,12 @@ public class MapGrid extends View {
         drawObstacles(canvas);
         // draw robot
         drawRobot(canvas, MainActivity.robot.getX(), MainActivity.robot.getY(), MainActivity.robot.getTheta());
-        //drawRobotView(canvas, MainActivity.robot.getX(), MainActivity.robot.getY(), MainActivity.robot.getTheta());
     }
     private void calculateDimensions(){
         int sidebarNumOfCells = 4;
         this.width = getWidth();
         this.height = getHeight();
-//        this.cellWidth = (float) (width - padding*2 - border*2) / (numColumns + 1);
         this.cellWidth = (float) (width - padding*2 - border*2) / (numColumns + sidebarNumOfCells + 1);
-//        this.cellHeight = (float) (height - padding*2 - border*2) / (numRows + 1);
         this.cellHeight = this.cellWidth;
         this.offsetX = padding + border + cellWidth;
         this.offsetY = padding + border;
@@ -119,30 +115,25 @@ public class MapGrid extends View {
         for (int i = 0; i <= numColumns; i++){
             canvas.drawLine(offsetX + i * cellWidth, offsetY, offsetX + i * cellWidth, offsetY + cellHeight * numRows, blackPaint);
         }
-
         for (int i = 0; i <= numRows; i++){
             canvas.drawLine(offsetX, offsetY + i * cellHeight, offsetX + cellWidth * (numColumns), offsetY + i * cellHeight, blackPaint);
         }
-
         float textSize = this.coordinatesPaint.getTextSize();
-        canvas.drawText("0", offsetX - this.cellWidth/2, offsetY + this.cellHeight * (float) (numRows + 0.7), this.coordinatesPaint);
-        for (int i = 1; i <= numColumns; i++){
-            canvas.drawText(String.valueOf(i), (float) (offsetX + this.cellWidth * i), offsetY + this.cellHeight * (float) (numRows + 0.7), this.coordinatesPaint);
+        //canvas.drawText("0", offsetX - this.cellWidth/2, offsetY + this.cellHeight * (float) (numRows + 0.7), this.coordinatesPaint);
+        for (int i = 0; i < numColumns; i++){
+            canvas.drawText(String.valueOf(i), (float) (offsetX + this.cellWidth * (i + 0.5)), offsetY + this.cellHeight * (float) (numRows + 0.7), this.coordinatesPaint);
         }
-        for (int i = 1; i <= numRows; i++){
-            canvas.drawText(String.valueOf(i), offsetX - this.cellWidth/2, (float) (offsetY + this.cellHeight * (numRows - i) + textSize/2), this.coordinatesPaint);
+        for (int i = 0; i < numRows; i++){
+            canvas.drawText(String.valueOf(i), offsetX - this.cellWidth/2, (float) (offsetY + this.cellHeight * (numRows - (i + 0.5)) + textSize/2), this.coordinatesPaint);
         }
     }
 
     private void drawRobot(Canvas canvas, float x, float y, int degree){
-        boolean drawView = true;
         if (y == -1 || x == -1){
             y = ((float) robotBoxTop + robotBoxBottom)/2;
             x = ((float) sideBarRight + sideBarLeft)/2;
             degree = 0;
-            drawView = false;
         }
-
         // Set up bitmap to draw
         Matrix matrix = new Matrix();
         matrix.postScale((float) com.example.mdpgrp2.Robot.ROBOT_LENGTH * cellWidth / robotBitmap.getWidth(), (float) com.example.mdpgrp2.Robot.ROBOT_LENGTH * cellHeight / robotBitmap.getHeight());
@@ -248,7 +239,6 @@ public class MapGrid extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
                 objectToMove = null;
                 // Determine which point in the map is the user touching
                 initialX = (event.getX() - offsetX)/cellWidth;
@@ -311,7 +301,7 @@ public class MapGrid extends View {
 
                         // Send new robot coordinates via bluetooth
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage("Robot " + ": (" + (int) (MainActivity.robot.getX() * 10) + ", " + (int) (MainActivity.robot.getY() * 10) + ")");
+                        ma.outgoingMessage("Robot " + ": (" + (int) (MainActivity.robot.getX()) + ", " + (int) (MainActivity.robot.getY()) + ")");
                     }
                     else{
                         MainActivity.robot.reset();
@@ -329,7 +319,7 @@ public class MapGrid extends View {
                             objectToMove.setCoordinates(finalX, finalY);
                         }
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage("Obstacle " + ((com.example.mdpgrp2.Obstacle) objectToMove).getNumber() + ": (" + (int) (objectToMove.getX() * 10) + ", " + (int) (objectToMove.getY() * 10) + ")");
+                        ma.outgoingMessage("Obstacle " + ((com.example.mdpgrp2.Obstacle) objectToMove).getNumber() + ": (" + (int) (objectToMove.getX()) + ", " + (int) (objectToMove.getY()) + ")");
                     }
                     invalidate();
                 }

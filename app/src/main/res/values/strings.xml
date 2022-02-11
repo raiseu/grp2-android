@@ -6,8 +6,6 @@
     <string name="direction">Direction : </string>
     <string name="x">X : </string>
     <string name="y">Y : </string>
-    <string name="challenge1">Find Fastest Route</string>
-    <string name="challenge2">Speed Parking</string>
     <string name="robotStatus">Robot Status:</string>
     <string name="receivedText">Received Text:</string>
     <string name="reset">Reset</string>

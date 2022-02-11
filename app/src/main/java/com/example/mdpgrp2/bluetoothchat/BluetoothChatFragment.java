@@ -47,8 +47,6 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.mdpgrp2.MainActivity;
 import com.example.mdpgrp2.R;
-import com.example.mdpgrp2.Robot;
-
 
 /**
  * This fragment controls Bluetooth to communicate with other devices.
@@ -248,9 +246,9 @@ public class BluetoothChatFragment extends Fragment {
      */
     private void sendMessage(String message) {
         // Check that we're actually connected before trying anything
-        if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
-            Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
-        }
+        //if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
+            //Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
+        //}
 
         // Check that there's actually something to send
         if (message.length() > 0) {
@@ -314,9 +312,7 @@ public class BluetoothChatFragment extends Fragment {
         actionBar.setSubtitle(subTitle);
     }
 
-
     /// The Handler that gets information back from the BluetoothChatService
-
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -377,14 +373,13 @@ public class BluetoothChatFragment extends Fragment {
                         MainActivity.updateBluetoothStatus("Connected to " + mConnectedDeviceName);
                         Toast.makeText(activity, "Connected to "
                                 + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
-
-
                     }
                     break;
                 case Constants.MESSAGE_TOAST:
                     if (null != activity) {
                         Toast.makeText(activity, msg.getData().getString(Constants.TOAST),
                                 Toast.LENGTH_SHORT).show();
+                        MainActivity.updateBluetoothStatus(msg.getData().getString(Constants.TOAST));
                     }
                     break;
             }
@@ -422,7 +417,6 @@ public class BluetoothChatFragment extends Fragment {
                 }
         }
     }
-
     /**
      * Establish connection with other device
      *
@@ -480,106 +474,6 @@ public class BluetoothChatFragment extends Fragment {
         }
         catch( NumberFormatException e ) {
             return false;
-        }
-    }
-
-    // Check if a string is a valid float
-    private boolean isFloat(String input) {
-        try {
-            Float.parseFloat(input);
-            return true;
-        }
-        catch (NumberFormatException e){
-            return false;
-        }
-    }
-
-    private void updateRobot(String readMessage){
-        Log.v("TAG","UPDATING ROBOT");
-        String[] splitString = readMessage.split(",");
-        if (splitString.length == 4){
-            // Initialise variables
-            float x = 0;
-            float y = 0;
-            int intX = 0;
-            int intY = 0;
-            char direction = ' ';
-
-            // Convert the x y strings into number form (float)
-            if (isFloat(splitString[1])){
-                x = Float.parseFloat(splitString[1]);
-            }
-            if (isFloat(splitString[2])){
-                y = Float.parseFloat(splitString[2]);
-            }
-            if (splitString[3].length() == 1){
-                direction = splitString[3].charAt(0);
-            }
-
-            // Find center of robot accordingly, based on direction of robot and position of back wheel
-            switch (direction){
-                case 'N':
-                    y += Robot.DISTANCE_TO_BACK_WHEEL;
-                    break;
-                case 'S':
-                    y -= Robot.DISTANCE_TO_BACK_WHEEL;
-                    break;
-                case 'E':
-                    x += Robot.DISTANCE_TO_BACK_WHEEL;
-                    break;
-                case 'W':
-                    x -= Robot.DISTANCE_TO_BACK_WHEEL;
-                    break;
-                default:
-                    break;
-            }
-            // Convert the x y
-            intX = (int) x;
-            intY = (int) y;
-            // Convert the x y into the correct scale (divide by 10)
-            x = (float) intX / 10;
-            y = (float) intY / 10;
-            MainActivity.setRobotPosition(x, y, direction);
-        } else if (splitString.length == 2){
-            MainActivity.updateRobotStatus(splitString[1]);
-        }
-    }
-
-    private void updateTarget(String readMessage){
-        Log.v("TAG","UPDATING TARGET");
-        String[] splitString = readMessage.split(",");
-        if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])){
-            Log.v("TAG","INSIDE TARGET");
-            MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]));
-        }
-    }
-
-    private void executeRobotCommand(String readMessage){
-        String[] splitString = readMessage.split(",");
-        if (splitString.length == 2 && splitString[0].length() == 1 && isInteger(splitString[1])){
-            double displacement;
-            int degrees;
-            switch (splitString[0].charAt(0)){
-                case 'f':
-                case 'r':
-                    // Reverse and Forward
-                    displacement = (Integer.parseInt(splitString[1])) / 10.0;
-                    MainActivity.driveRobotStraight(displacement);
-                    break;
-                case 'd':
-                case 'e':
-                    // Turn left and reverse left
-                    degrees = Integer.parseInt(splitString[1]);
-                    break;
-                case 'g':
-                    // Turn right
-                    break;
-                case 't':
-                    // Reverse right
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

@@ -128,8 +128,8 @@
 
             <com.example.mdpgrp2.MapGrid
                 android:id="@+id/map"
-                android:layout_width="747dp"
-                android:layout_height="632dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
 
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -154,13 +154,14 @@
 
             <LinearLayout
                 android:id="@+id/robotTV"
-                android:layout_width="493dp"
+                android:layout_width="620dp"
                 android:layout_height="78dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/border_white_background"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/map"
-                tools:layout_editor_absoluteX="5dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/map">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -183,13 +184,14 @@
 
             <FrameLayout
                 android:id="@+id/sample_content_fragment"
-                android:layout_width="491dp"
-                android:layout_height="167dp"
+                android:layout_width="620dp"
+                android:layout_height="315dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/border_white_background"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/robotTV"
-                tools:layout_editor_absoluteX="5dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/robotTV">
 
             </FrameLayout>
 

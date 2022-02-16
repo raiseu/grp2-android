@@ -5,20 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding='10dp'
+
     app:behavior_hideable="false"
-    app:behavior_peekHeight="50dp"
+    app:behavior_peekHeight="28dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
 
     <!--<androidx.cardview.widget.CardView
-
         android:layout_width="718dp"
         android:layout_height="104dp"
         app:cardBackgroundColor="@color/black"
         app:cardCornerRadius="1dp"
         app:cardElevation="20dp">-->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
@@ -55,33 +53,26 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="66dp"
             android:background="@color/DARKBLUE"
-            android:paddingLeft="20dp"
             android:textColor="@color/white">
 
             <TextView
                 android:id="@+id/txtTimer2"
-                android:layout_width="417dp"
-                android:layout_height="104dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="70dp"
-                android:layout_marginEnd="283dp"
-                android:layout_marginBottom="56dp"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:layout_marginTop="60dp"
                 android:text="00:00:00"
-                android:textColor="@color/light_blue"
+                android:textColor="@color/white"
                 android:textSize="80dp" />
 
             <Button
                 android:id="@+id/startbutton2"
-                android:layout_width="130dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="550dp"
-                android:layout_marginEnd="48dp"
-                android:layout_marginBottom="152dp"
+                android:layout_marginEnd="57dp"
+                android:layout_marginBottom="127dp"
                 android:background="@color/teal_700"
                 android:onClick="startTapped2"
                 android:text="START"
@@ -91,12 +82,11 @@
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="131dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="543dp"
-                android:layout_marginEnd="51dp"
+                android:layout_marginEnd="57dp"
                 android:layout_marginBottom="61dp"
                 android:background="@color/purple_200"
                 android:onClick="resetTapped2"
@@ -105,10 +95,11 @@
                 android:textSize="30dp" />
 
             <TextView
-                style='@style/TextAppearance.AppCompat.Headline'
-                android:layout_width="723dp"
-                android:layout_height="225dp"
-                android:layout_marginBottom="358dp"
+                android:id="@+id/ImageTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:layout_marginTop="30dp"
                 android:text="Image Recognition Timer"
                 android:textColor="@color/white"
                 android:textSize="30dp"
@@ -118,7 +109,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="369dp"
             android:background="@color/DARKBLUE">
@@ -126,26 +117,20 @@
 
             <TextView
                 android:id="@+id/txtTimer"
-                android:layout_width="430dp"
-                android:layout_height="94dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="51dp"
-                android:layout_marginEnd="274dp"
-                android:layout_marginBottom="55dp"
-                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:layout_marginTop="60dp"
                 android:text="00:00:00"
                 android:textColor="@color/white"
                 android:textSize="80dp" />
 
             <Button
                 android:id="@+id/startbutton"
-                android:layout_width="141dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="550dp"
                 android:layout_marginEnd="57dp"
                 android:layout_marginBottom="127dp"
                 android:background="@color/teal_700"
@@ -156,12 +141,11 @@
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="1600dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="543dp"
-                android:layout_marginEnd="51dp"
+                android:layout_marginEnd="57dp"
                 android:layout_marginBottom="61dp"
                 android:background="@color/purple_200"
                 android:onClick="resetTapped"
@@ -171,12 +155,11 @@
 
 
             <TextView
-                android:id="@+id/textView"
-                style='@style/TextAppearance.AppCompat.Headline'
-                android:layout_width="723dp"
-                android:layout_height="255dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="5dp"
+                android:id="@+id/fastestTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:layout_marginTop="30dp"
                 android:text="Fastest Path Timer"
                 android:textColor="@color/white"
                 android:textSize="30dp"

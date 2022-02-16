@@ -82,6 +82,7 @@ public class Robot implements ICoordinate{
             }
             this.setCoordinates(this.x + (float) xChange , this.y + (float) yChange);
         }
+
     }
 
     public void moveRobotTurnLeft(){

@@ -14,7 +14,7 @@
         android:textSize="25sp"
         android:textColor="@color/white" />-->
 
-
+<!--
     <Button
         android:id="@+id/button"
         android:layout_width="250dp"
@@ -44,10 +44,10 @@
         android:textSize="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintVertical_bias="0.522" />
 
     <Button
         android:id="@+id/startbutton"
@@ -67,5 +67,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.272" />
 
-
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>

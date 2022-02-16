@@ -80,51 +80,15 @@ public class FastestPathTimerFragment extends Fragment {
 
     }
 
-
+/*
     // fastest path
     public void startTapped(View view) {
-        if (timerStarted == false) {
-            timerStarted = true;
-            startbutton.setText("STOP");
-            startbutton.setTextColor(Color.WHITE);
-            startTimer();
 
-
-            MainActivity.outgoingMessage("i am moving now"); // check if this is the correct message
-
-        } else {
-            timerStarted = false;
-            startbutton.setText("START");
-            startbutton.setTextColor(Color.MAGENTA);
-
-            timerTask.cancel();
-        }
 
 
     }
 
-    private void startTimer() {
 
-        timerTask = new TimerTask() {
-
-            @Override
-            public void run() {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            time++;
-                            timerText.setText(getTimerTask());
-                            Log.d("hello", getTimerTask());
-
-                        }
-                    });
-
-
-            }
-        };
-        timer.scheduleAtFixedRate(timerTask, 0, 1000); // 1000ms = 1s
-
-    }
 
     private String getTimerTask() {
         int rounded = (int) Math.round(time);
@@ -153,14 +117,56 @@ public class FastestPathTimerFragment extends Fragment {
         startbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startTapped(view);
+                if (timerStarted == false) {
+                    timerStarted = true;
+                    startbutton.setText("STOP");
+                    startbutton.setTextColor(Color.BLACK);
+
+                    startTimer();
+
+                    MainActivity.outgoingMessage("i am moving now"); // check if this is the correct message
+
+
+                } else {
+                    timerStarted = false;
+                    startbutton.setText("START");
+                    startbutton.setTextColor(Color.MAGENTA);
+
+                    timerTask.cancel();
+                }
+
             }
         });
+
         return view;
 
     }
 
+    public void startTimer() {
+        timerTask = new TimerTask() {
 
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        time++;
+                        timerText.setText(getTimerTask());
+                        Log.d("hello", getTimerTask());
+
+                    }
+                });
+
+
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 0, 1000); // 1000ms = 1s
+
+
+
+    }
+
+*/
 /*
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -206,4 +212,5 @@ public class FastestPathTimerFragment extends Fragment {
 
         }
     }*/
+
 }

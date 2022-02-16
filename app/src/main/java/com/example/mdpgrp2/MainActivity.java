@@ -2,6 +2,7 @@ package com.example.mdpgrp2;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -65,11 +67,17 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager; //bottom_sheet_viewpager
 
     TextView timerText;
+    TextView timerText2;
     Button startbutton;
+    Button startbutton2;
     boolean timerStarted = false;
+    boolean timerStarted2 = false;
     Timer timer;
+    Timer timer2;
     TimerTask timerTask;
+    TimerTask timerTask2;
     Double time = 0.0;
+    Double time2 = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +92,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         timerText = (TextView) findViewById(R.id.txtTimer);
+        timerText2 = (TextView) findViewById(R.id.txtTimer2);
         startbutton = (Button) findViewById(R.id.startbutton);
+        startbutton2 = (Button) findViewById(R.id.startbutton2);
         timer = new Timer();
-
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        timer2 = new Timer();
+/*
+       // tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        //viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         // add the tabs
         tabLayout.addTab(tabLayout.newTab().setText("FastestPathTimer"));
@@ -117,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+*/
 
         //drawing of map grid
         mapGrid = findViewById(R.id.map);
@@ -232,25 +245,89 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-/*
-        findViewById(R.id.startbutton).setOnClickListener(new View.OnClickListener() {
+
+
+    // fastest path
+    public void resetTapped(View view)
+    {
+        AlertDialog.Builder resetAlert = new AlertDialog.Builder(this);
+        resetAlert.setTitle("Reset Timer");
+        resetAlert.setMessage("Are you sure you want to reset the timer?");
+        resetAlert.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startTimer();
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(timerTask != null)
+                {
+                    timerTask.cancel();
+                    startButtonUI("START", R.color.darkBlue);
+                    time = 0.0;
+                    timerStarted = false;
+                    timerText.setText(formatTime(0,0,0));
+
+                }
+
             }
         });
-*/
+
+        resetAlert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //do nothing
+
+            }
+        });
+
+        resetAlert.show();
+
 
 
     }
-/*
-    // fastest path
+
+    public void resetTapped2(View view)
+    {
+        AlertDialog.Builder resetAlert = new AlertDialog.Builder(this);
+        resetAlert.setTitle("Reset Timer");
+        resetAlert.setMessage("Are you sure you want to reset the timer?");
+        resetAlert.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(timerTask2 != null)
+                {
+                    timerTask2.cancel();
+                    startButtonUI2("START", R.color.darkBlue);
+                    time2 = 0.0;
+                    timerStarted2 = false;
+                    timerText2.setText(formatTime(0,0,0));
+
+
+                }
+
+            }
+        });
+
+        resetAlert.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //do nothing
+
+            }
+        });
+
+        resetAlert.show();
+    }
+
+
+
+
+
+
     public void startTapped(View view){
         if(timerStarted == false){
             timerStarted = true;
-            startbutton.setText("STOP");
-            startbutton.setTextColor(ContextCompat.getColor(this, R.color.baby_blue));
+            startButtonUI("STOP", R.color.baby_blue);
+            timerTxtUI("timerText", R.color.purple_500);
 
             outgoingMessage("i am moving now"); // check if this is the correct message
             startTimer();
@@ -258,11 +335,45 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             timerStarted = false;
-            startbutton.setText("START");
-            startbutton.setTextColor(ContextCompat.getColor(this, R.color.darkBlue));
+            startButtonUI("START", R.color.darkBlue);
+            timerTxtUI("timerText", R.color.white);
 
             timerTask.cancel();
         }
+    }
+
+    public void startTapped2(View view){
+        if(timerStarted2 == false){
+            timerStarted2 = true;
+            startButtonUI2("STOP", R.color.baby_blue);
+
+            outgoingMessage("i am moving now"); // check if this is the correct message
+            startTimer2();
+
+        }
+        else{
+            timerStarted2 = false;
+            startButtonUI2("START", R.color.darkBlue);
+
+            timerTask2.cancel();
+        }
+    }
+
+    private void startButtonUI(String start, int color) {
+        startbutton.setText(start);
+        startbutton.setTextColor(ContextCompat.getColor(this, color));
+    }
+
+    private void startButtonUI2(String start, int color) {
+        startbutton2.setText(start);
+        startbutton2.setTextColor(ContextCompat.getColor(this, color));
+    }
+
+    private void timerTxtUI(String start, int color) {
+        if(start == "timerText")
+            timerText.setTextColor(ContextCompat.getColor(this, color));
+        else
+            timerText2.setTextColor(ContextCompat.getColor(this, color));
     }
 
     private void startTimer() {
@@ -278,11 +389,30 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 0, 1000); // 1000ms = 1s
+
+    }
+
+    private void startTimer2() {
+        timerTask2  = new TimerTask() {
+            @Override
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        time2++;
+                        timerText2.setText(getTimerTask2());
+
+                    }
+                });
 
 
             }
         };
-        timer.scheduleAtFixedRate(timerTask, 0, 1000); // 1000ms = 1s
+        timer2.scheduleAtFixedRate(timerTask2, 0, 1000); // 1000ms = 1s
 
     }
 
@@ -296,10 +426,20 @@ public class MainActivity extends AppCompatActivity {
         return formatTime(seconds, minutes, hours);
     }
 
+    private String getTimerTask2() {
+        int rounded = (int) Math.round(time2);
+
+        int seconds = ((rounded % 86400) % 3600) % 60;
+        int minutes = ((rounded % 86400) % 3600) / 60;
+        int hours = ((rounded % 86400) / 3600);
+
+        return formatTime(seconds, minutes, hours);
+    }
+
     private String formatTime(int seconds, int minutes, int hours) {
         return String.format("%02d", hours) + " : " + String.format("%02d", minutes) + " : " +  String.format("%02d", seconds);
     }
-*/
+
 
 
     public static void outgoingMessage(String sendMsg) {

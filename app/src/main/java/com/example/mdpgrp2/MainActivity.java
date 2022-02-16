@@ -35,6 +35,7 @@ import com.example.mdpgrp2.bluetoothchat.BluetoothChatFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private BottomSheetBehavior sheetBehavior;
 
     static Robot robot = new Robot();
-    static FastestPathTimerFragment FPT = new FastestPathTimerFragment();
     static Obstacle obstacle = new Obstacle(1);
     @SuppressLint("StaticFieldLeak")
     public static TextView txtX;
@@ -57,14 +57,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static TextView txtRobotStatus, bluetoothTVStatus;
     private static MapGrid mapGrid;
-    //BluetoothChatFragment fragment;
-
-    public boolean tiltChk = false;
-    MutableLiveData<String> listen = new MutableLiveData<>();
-
-    private BottomSheetBehavior bottomSheetBehavior;
-    TabLayout tabLayout; //bottom_sheet_tabs
-    ViewPager viewPager; //bottom_sheet_viewpager
 
     TextView timerText;
     TextView timerText2;
@@ -87,9 +79,6 @@ public class MainActivity extends AppCompatActivity {
         //bottomSheetToolbar = (Toolbar) this.findViewById(R.id.toolbar);
 
         LinearLayout linearLayout = findViewById(R.id.design_bottom_sheet);
-
-        bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
-
 
         timerText = (TextView) findViewById(R.id.txtTimer);
         timerText2 = (TextView) findViewById(R.id.txtTimer2);
@@ -329,9 +318,8 @@ public class MainActivity extends AppCompatActivity {
             startButtonUI("STOP", R.color.baby_blue);
             timerTxtUI("timerText", R.color.purple_500);
 
-            outgoingMessage("i am moving now"); // check if this is the correct message
+            outgoingMessage("START FASTEST PATH"); // check if this is the correct message
             startTimer();
-
         }
         else{
             timerStarted = false;
@@ -344,12 +332,45 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTapped2(View view){
         if(timerStarted2 == false){
-            timerStarted2 = true;
-            startButtonUI2("STOP", R.color.baby_blue);
-
-            outgoingMessage("i am moving now"); // check if this is the correct message
-            startTimer2();
-
+            StringBuilder msg = new StringBuilder();
+            ArrayList<Obstacle> obstacles = Map.getInstance().getObstacles();
+            //outgoingMessage(String.valueOf(obstacles.size()));
+            if(obstacles.size() != 5){
+                Toast.makeText(MainActivity.this, obstacles.size() + " obstacles selected ",
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                boolean setDir = true;
+                StringBuilder unset = new StringBuilder();
+                char dir = ' ';
+                for (int i = 0; i < obstacles.size(); i++){
+                    if (i != 0){
+                        msg.append("|");
+                    }
+                    dir = obstacles.get(i).getSide();
+                    if (dir != 'N' && dir != 'S' && dir != 'E' && dir != 'W') {
+                        setDir = false;
+                        if (!unset.toString().equals("")) {
+                            unset.append(",");
+                        }
+                        unset.append(obstacles.get(i).getNumber());
+                    }
+                    msg.append(obstacles.get(i).getNumber()).append(",")
+                            .append((int) (obstacles.get(i).getX() )).append(",")
+                            .append((int) (obstacles.get(i).getY() )).append(",")
+                            .append(obstacles.get(i).getSide());
+                }
+                if (setDir) {
+                    timerStarted2 = true;
+                    startButtonUI2("STOP", R.color.baby_blue);
+                    startTimer2();
+                    outgoingMessage(msg.toString());
+                }
+                else {
+                    Toast.makeText(MainActivity.this, unset + " side not selected",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
         }
         else{
             timerStarted2 = false;

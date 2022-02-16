@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 robot.moveRobotForward(-1.0);
                 mapGrid.invalidate();
-                String navi = "r";
+                String navi = "b";
                 outgoingMessage(navi);
                 //Toast.makeText(MainActivity.this, "Move backward", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
@@ -318,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
             startButtonUI("STOP", R.color.baby_blue);
             timerTxtUI("timerText", R.color.purple_500);
 
-            outgoingMessage("START FASTEST PATH"); // check if this is the correct message
+            outgoingMessage("START"); // check if this is the correct message
             startTimer();
         }
         else{

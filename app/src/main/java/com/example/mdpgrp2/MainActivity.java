@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //To move forward
         findViewById(R.id.btnUp).setOnClickListener(new View.OnClickListener() {
             @Override

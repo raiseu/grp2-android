@@ -36,7 +36,7 @@ public class MapGrid extends View {
     private final Paint blackPaint = new Paint();
     private final Paint coordinatesPaint = new Paint();
     private final Paint whiteNumber = new Paint();
-    private final Paint blackNumber = new Paint();
+    private final Paint whiteNumberTwo = new Paint();
     private final Paint yellowPaint = new Paint();
     private final Paint greenPaint = new Paint();
 
@@ -74,10 +74,10 @@ public class MapGrid extends View {
         whiteNumber.setColor(Color.WHITE);
         whiteNumber.setTextSize(20);
         whiteNumber.setTextAlign(Paint.Align.CENTER);
-        blackNumber.setColor(Color.BLACK);
-        blackNumber.setTextSize(20);
-        blackNumber.setTextAlign(Paint.Align.LEFT);
-        yellowPaint.setColor(Color.YELLOW);
+        whiteNumberTwo.setColor(Color.WHITE);
+        whiteNumberTwo.setTextSize(35);
+        whiteNumberTwo.setTextAlign(Paint.Align.CENTER);
+        yellowPaint.setColor(Color.RED);
         greenPaint.setColor(Color.rgb(0, 153, 51));
     }
                                                               
@@ -182,10 +182,14 @@ public class MapGrid extends View {
             float bottom = (float) (offsetY + cellHeight * (numRows - y + 0.5));
             if (obstacle.isExplored()){
                 canvas.drawRect(left, top, right, bottom, greenPaint);
-                canvas.drawText(String.valueOf(obstacle.getTargetID()), (float) (left + 0.5 * cellWidth), (float) (top + (cellHeight - textSize)/2 + textSize), whiteNumber);
+                canvas.drawText(String.valueOf(obstacle.getTargetID()),
+                        (float) (left + 0.5 * cellWidth),
+                        (float) (top + (cellHeight - textSize)/2 + 1 + textSize), whiteNumberTwo);
             } else{
                 canvas.drawRect(left, top, right, bottom, blackPaint);
-                canvas.drawText(String.valueOf(obstacle.getNumber()), (float) (left + 0.5 * cellWidth), (float) (top + (cellHeight - textSize)/2 + textSize), whiteNumber);
+                canvas.drawText(String.valueOf(obstacle.getNumber()),
+                        (float) (left + 0.5 * cellWidth),
+                        (float) (top + (cellHeight - textSize)/2 - 3 + textSize), whiteNumber);
             }
             switch (obstacle.getSide()){
                 case 'N':

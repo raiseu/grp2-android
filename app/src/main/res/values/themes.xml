@@ -41,4 +41,20 @@
         <item name="tabIndicatorColor">?attr/colorPrimaryDark</item>
     </style>
 
+
+    <style name="AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+
+        <item name="colorAccent">@color/dark_blue</item>
+        <item name="android:textColor">@color/dark_blue</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/dark_navy</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/fiery_coral</item>
+    </style>
+
+
 </resources>

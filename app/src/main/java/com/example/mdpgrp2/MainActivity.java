@@ -217,7 +217,8 @@ public class MainActivity extends AppCompatActivity {
     // fastest path
     public void resetTapped(View view)
     {
-        AlertDialog.Builder resetAlert = new AlertDialog.Builder(this);
+        AlertDialog.Builder resetAlert = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
+        //AlertDialog alertDialog = resetAlert.create();
         resetAlert.setTitle("Reset Timer");
         resetAlert.setMessage("Are you sure you want to reset the timer?");
         resetAlert.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
@@ -231,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                     time = 0.0;
                     timerStarted = false;
                     timerText.setText(formatTime(0,0,0));
-
+                    timerText.setTextColor(getResources().getColor(R.color.white));
                 }
 
             }
@@ -247,11 +248,12 @@ public class MainActivity extends AppCompatActivity {
 
         resetAlert.show();
 
+
     }
 
     public void resetTapped2(View view)
     {
-        AlertDialog.Builder resetAlert = new AlertDialog.Builder(this);
+        AlertDialog.Builder resetAlert = new AlertDialog.Builder(this, R.style.AlertDialogTheme) ;
         resetAlert.setTitle("Reset Timer");
         resetAlert.setMessage("Are you sure you want to reset the timer?");
         resetAlert.setPositiveButton("Reset", new DialogInterface.OnClickListener() {

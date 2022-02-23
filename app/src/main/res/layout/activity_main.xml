@@ -144,6 +144,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="15dp"
                 android:text="@string/reset"
+                android:textStyle="bold"
                 android:textColor="@color/white"
                 android:background="@drawable/custom_button_pressed"
                 android:textSize="20sp"

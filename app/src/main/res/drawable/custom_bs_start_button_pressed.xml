@@ -8,8 +8,8 @@
     <item
         android:state_focused="false"
         android:state_pressed="true"
-        android:drawable="@drawable/custom_button" />
+        android:background="@drawable/custom_button" />
 
-    <item android:drawable="@drawable/custom_button_1" />
+    <item android:drawable="@drawable/custom_bs_start_button" />
 
 </selector>

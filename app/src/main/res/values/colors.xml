@@ -13,4 +13,35 @@
     <color name="light_blue">#FF1283FC</color>
     <color name="baby_blue">#89CFF0</color>
     <color name="darkBlue">#2a2a72</color>
+
+    <!--BottomSheet Colors-->
+    <color name="navy">#11468F</color>
+    <color name="dark_navy">#041562</color>
+    <color name="red">#FF0000</color>
+    <color name="grey_white">#EEEEEE</color>
+
+    <color name="DCP">#F13A3A</color>
+    <color name="PeriPeri">#CB2D2E</color>
+    <color name="goldYellow">#FFDF00</color>
+    <color name="electricBlue"> #0696D3</color>
+
+    <color name="orange">#FF5D3D</color>
+    <color name="orangeSoda">#FF5D3D</color>
+    <color name="prussianBlue">#022B53</color>
+    <color name="oceanBreeze">#6FE8E2</color>
+
+    <color name="fiery_coral">#FF4F58</color>
+    <color name="atmosphere">#A89C94</color>
+    <color name="delphBlue">#669DB3</color>
+    <color name="blueWhite">#F0F6F7</color>
+    <color name = "goldenYellow">#FFB703</color>
+    <color name="honeyOrange">#FB8500</color>
+    <color name="nenonBlue">#11FFEE</color>
+
+
+
+
+
+
+
 </resources>

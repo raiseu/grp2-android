@@ -35,6 +35,8 @@ import com.example.mdpgrp2.bluetoothchat.BluetoothChatFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView timerText;
     TextView timerText2;
+    TextView fastestPT;
+    TextView imgRecT;
     Button startbutton;
     Button startbutton2;
     boolean timerStarted = false;
@@ -84,41 +88,12 @@ public class MainActivity extends AppCompatActivity {
         timerText2 = (TextView) findViewById(R.id.txtTimer2);
         startbutton = (Button) findViewById(R.id.startbutton);
         startbutton2 = (Button) findViewById(R.id.startbutton2);
+        fastestPT = (TextView) findViewById(R.id.fastestTV);
+        imgRecT = (TextView) findViewById(R.id.ImageTV);
+
         timer = new Timer();
         timer2 = new Timer();
-/*
-       // tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        //viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        // add the tabs
-        tabLayout.addTab(tabLayout.newTab().setText("FastestPathTimer"));
-        tabLayout.addTab(tabLayout.newTab().setText("ImgRecTimer"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final bottomSheetAdapters adapter = new bottomSheetAdapters(this, getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-*/
 
         //drawing of map grid
         mapGrid = findViewById(R.id.map);
@@ -251,7 +226,8 @@ public class MainActivity extends AppCompatActivity {
                 if(timerTask != null)
                 {
                     timerTask.cancel();
-                    startButtonUI("START", R.color.darkBlue);
+                    startButtonUI("START", R.color.white);
+                    timerTVUI("Fastest Path Timer", R.color.white);
                     time = 0.0;
                     timerStarted = false;
                     timerText.setText(formatTime(0,0,0));
@@ -271,8 +247,6 @@ public class MainActivity extends AppCompatActivity {
 
         resetAlert.show();
 
-
-
     }
 
     public void resetTapped2(View view)
@@ -286,11 +260,12 @@ public class MainActivity extends AppCompatActivity {
                 if(timerTask2 != null)
                 {
                     timerTask2.cancel();
-                    startButtonUI2("START", R.color.darkBlue);
+                    startButtonUI2("START", R.color.white);
+                    timerTVUI("Image Recognition", R.color.white);
                     time2 = 0.0;
                     timerStarted2 = false;
                     timerText2.setText(formatTime(0,0,0));
-
+                    timerText2.setTextColor(getResources().getColor(R.color.white));
 
                 }
 
@@ -306,26 +281,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
         resetAlert.show();
+
     }
-
-
-
 
 
 
     public void startTapped(View view){
         if(timerStarted == false){
             timerStarted = true;
-            startButtonUI("STOP", R.color.baby_blue);
-            timerTxtUI("timerText", R.color.purple_500);
+            startButtonUI("STOP", R.color.white);
+            timerTxtUI("timerText", R.color.nenonBlue);
+            timerTVUI("Fastest Path Timer",  R.color.oceanBreeze);
+            Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
 
             outgoingMessage("START"); // check if this is the correct message
             startTimer();
         }
         else{
             timerStarted = false;
-            startButtonUI("START", R.color.darkBlue);
-            timerTxtUI("timerText", R.color.white);
+            startButtonUI("START", R.color.blueWhite);
+            timerTxtUI("timerText", R.color.fiery_coral);
+            timerTVUI("Fastest Path Timer",  R.color.fiery_coral);
+
 
             timerTask.cancel();
         }
@@ -333,6 +310,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTapped2(View view){
         if(timerStarted2 == false){
+            timerStarted2 = true;
+            startButtonUI2("STOP", R.color.white);
+            timerTxtUI("timerText2", R.color.nenonBlue);
+            timerTVUI("Image Recognition",  R.color.oceanBreeze);
+            Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
+
+
+            startTimer2();
+
             StringBuilder msg = new StringBuilder();
             ArrayList<Obstacle> obstacles = Map.getInstance().getObstacles();
             //outgoingMessage(String.valueOf(obstacles.size()));
@@ -375,7 +361,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             timerStarted2 = false;
-            startButtonUI2("START", R.color.darkBlue);
+            startButtonUI2("START", R.color.blueWhite);
+            timerTxtUI("timerText2", R.color.fiery_coral);
+            timerTVUI("Image Recognition",  R.color.fiery_coral);
 
             timerTask2.cancel();
         }
@@ -396,6 +384,18 @@ public class MainActivity extends AppCompatActivity {
             timerText.setTextColor(ContextCompat.getColor(this, color));
         else
             timerText2.setTextColor(ContextCompat.getColor(this, color));
+    }
+
+    private void timerTVUI(String start, int color) {
+        if(start == "Fastest Path Timer"){
+            fastestPT.setTextColor(ContextCompat.getColor(this, color));
+            fastestPT.setText("Fastest Path Timer");
+        }
+
+        else if(start == "Image Recognition"){
+            imgRecT.setTextColor(ContextCompat.getColor(this, color));
+            imgRecT.setText("Image Recognition");
+        }
     }
 
     private void startTimer() {

@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -296,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
             timerTVUI("Fastest Path Timer",  R.color.oceanBreeze);
             Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
 
-            outgoingMessage("START"); // check if this is the correct message
+            outgoingMessage("START FASTEST PATH"); // check if this is the correct message
             startTimer();
         }
         else{
@@ -312,15 +313,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void startTapped2(View view){
         if(timerStarted2 == false){
-            timerStarted2 = true;
-            startButtonUI2("STOP", R.color.white);
-            timerTxtUI("timerText2", R.color.nenonBlue);
-            timerTVUI("Image Recognition",  R.color.oceanBreeze);
-            Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
-
-
-            startTimer2();
-
             StringBuilder msg = new StringBuilder();
             ArrayList<Obstacle> obstacles = Map.getInstance().getObstacles();
             //outgoingMessage(String.valueOf(obstacles.size()));
@@ -351,7 +343,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (setDir) {
                     timerStarted2 = true;
-                    startButtonUI2("STOP", R.color.baby_blue);
+                    startButtonUI2("STOP", R.color.white);
+                    timerTxtUI("timerText2", R.color.nenonBlue);
+                    timerTVUI("Image Recognition",  R.color.oceanBreeze);
+                    //Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
+
                     startTimer2();
                     outgoingMessage(msg.toString());
                 }

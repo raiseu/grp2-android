@@ -167,8 +167,14 @@ public class MainActivity extends AppCompatActivity {
                 //if(robot.getX()+30 != obstacle.getX()  && robot.getY()+30 != obstacle.getY()){
                 robot.moveRobotForward(1.0);
                 mapGrid.invalidate();
-                String navi = "f";
-                outgoingMessage(navi);
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("type","movement");
+                    obj.put("payload", "f");
+                    outgoingMessage(obj.toString()); // check if this is the correct message
+                } catch (JSONException e) {
+                    //some exception handler code.
+                }
                 //Toast.makeText(MainActivity.this, "Move forward", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
                 //}
@@ -181,8 +187,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 robot.moveRobotForward(-1.0);
                 mapGrid.invalidate();
-                String navi = "b";
-                outgoingMessage(navi);
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("type","movement");
+                    obj.put("payload", "b");
+                    outgoingMessage(obj.toString()); // check if this is the correct message
+                } catch (JSONException e) {
+                    //some exception handler code.
+                }
                 //Toast.makeText(MainActivity.this, "Move backward", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }
@@ -194,8 +206,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 robot.moveRobotTurnLeft();
                 mapGrid.invalidate();
-                String navi = "tl";
-                outgoingMessage(navi);
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("type","movement");
+                    obj.put("payload", "tl");
+                    outgoingMessage(obj.toString()); // check if this is the correct message
+                } catch (JSONException e) {
+                    //some exception handler code.
+                }
                 //Toast.makeText(MainActivity.this, "Turn Left", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }
@@ -207,8 +225,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 robot.moveRobotTurnRight();
                 mapGrid.invalidate();
-                String navi = "tr";
-                outgoingMessage(navi);
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("type","movement");
+                    obj.put("payload", "tr");
+                    outgoingMessage(obj.toString()); // check if this is the correct message
+                } catch (JSONException e) {
+                    //some exception handler code.
+                }
                 //Toast.makeText(MainActivity.this, "Turn Right", Toast.LENGTH_SHORT).show();
                 updateRobotPositionText();
             }

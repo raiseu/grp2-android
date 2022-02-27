@@ -36,6 +36,9 @@ import com.example.mdpgrp2.bluetoothchat.BluetoothChatFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -297,7 +300,16 @@ public class MainActivity extends AppCompatActivity {
             timerTVUI("Fastest Path Timer",  R.color.oceanBreeze);
             Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
 
-            outgoingMessage("START FASTEST PATH"); // check if this is the correct message
+            //outgoingMessage("START");
+            try {
+                JSONObject obj = new JSONObject();
+                obj.put("type","instruction");
+                obj.put("payload", "start");
+                outgoingMessage(obj.toString()); // check if this is the correct message
+            } catch (JSONException e) {
+                //some exception handler code.
+            }
+
             startTimer();
         }
         else{
@@ -312,10 +324,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTapped2(View view){
+        try {
+            JSONObject objj = new JSONObject();
+            JSONArray array = new JSONArray();
         if(timerStarted2 == false){
             StringBuilder msg = new StringBuilder();
             ArrayList<Obstacle> obstacles = Map.getInstance().getObstacles();
-            //outgoingMessage(String.valueOf(obstacles.size()));
             if(obstacles.size() != 5){
                 Toast.makeText(MainActivity.this, obstacles.size() + " obstacles selected ",
                         Toast.LENGTH_SHORT).show();
@@ -336,10 +350,16 @@ public class MainActivity extends AppCompatActivity {
                         }
                         unset.append(obstacles.get(i).getNumber());
                     }
+                    /*
                     msg.append(obstacles.get(i).getNumber()).append(",")
                             .append((int) (obstacles.get(i).getX() )).append(",")
                             .append((int) (obstacles.get(i).getY() )).append(",")
                             .append(obstacles.get(i).getSide());
+                        */
+                        array.put(obstacles.get(i).getNumber() + "," +
+                                (int)obstacles.get(i).getX() + "," +
+                                (int)obstacles.get(i).getY()  + "," +
+                                obstacles.get(i).getSide());
                 }
                 if (setDir) {
                     timerStarted2 = true;
@@ -349,7 +369,10 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
 
                     startTimer2();
-                    outgoingMessage(msg.toString());
+
+                    objj.put("type","coordinates");
+                    objj.put("payload",array);
+                    outgoingMessage(objj.toString());
                 }
                 else {
                     Toast.makeText(MainActivity.this, unset + " side not selected",
@@ -364,6 +387,9 @@ public class MainActivity extends AppCompatActivity {
             timerTVUI("Image Recognition",  R.color.fiery_coral);
 
             timerTask2.cancel();
+        }
+        } catch (JSONException e) {
+            //some exception handler code.
         }
     }
 

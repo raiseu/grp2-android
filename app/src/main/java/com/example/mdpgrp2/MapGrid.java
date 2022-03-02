@@ -13,6 +13,10 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MapGrid extends View {
     // dimensions of canvas
     private int width;
@@ -34,6 +38,7 @@ public class MapGrid extends View {
     private final Paint whitePaint = new Paint();
     private final Paint bluePaint = new Paint();
     private final Paint blackPaint = new Paint();
+    private final Paint redPaint = new Paint();
     private final Paint coordinatesPaint = new Paint();
     private final Paint whiteNumber = new Paint();
     private final Paint whiteNumberTwo = new Paint();
@@ -64,6 +69,7 @@ public class MapGrid extends View {
 
     public MapGrid(Context context, AttributeSet attrs){
         super(context, attrs);
+
         whitePaint.setColor(Color.WHITE);
         whitePaint.setShadowLayer(border, 0, 0, Color.GRAY);
         bluePaint.setColor(Color.BLUE);
@@ -77,16 +83,19 @@ public class MapGrid extends View {
         whiteNumberTwo.setColor(Color.WHITE);
         whiteNumberTwo.setTextSize(35);
         whiteNumberTwo.setTextAlign(Paint.Align.CENTER);
-        yellowPaint.setColor(Color.RED);
+        redPaint.setColor(Color.RED);
+        yellowPaint.setColor(Color.rgb(255,253,141));
         greenPaint.setColor(Color.rgb(0, 153, 51));
     }
-                                                              
+
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         calculateDimensions();
         // draw white area of canvas
         canvas.drawRoundRect(border, border, width - border - sidebar, height - border, 20, 20, whitePaint);
+        // draw start Area
+        drawStartArea(canvas);
         // draw grid lines and coordinates
         drawCoordinates(canvas);
         // draw obstacle box
@@ -98,6 +107,11 @@ public class MapGrid extends View {
         // draw robot
         drawRobot(canvas, MainActivity.robot.getX(), MainActivity.robot.getY(), MainActivity.robot.getTheta());
     }
+    private void drawStartArea(Canvas canvas) {
+        int width = 4;
+        canvas.drawRect(offsetX, offsetY + (numRows - width) * cellHeight, offsetX + width * cellWidth, offsetY + numRows * cellHeight, yellowPaint);
+    }
+
     private void calculateDimensions(){
         int sidebarNumOfCells = 4;
         this.width = getWidth();
@@ -118,6 +132,7 @@ public class MapGrid extends View {
         for (int i = 0; i <= numRows; i++){
             canvas.drawLine(offsetX, offsetY + i * cellHeight, offsetX + cellWidth * (numColumns), offsetY + i * cellHeight, blackPaint);
         }
+
         float textSize = this.coordinatesPaint.getTextSize();
         //canvas.drawText("0", offsetX - this.cellWidth/2, offsetY + this.cellHeight * (float) (numRows + 0.7), this.coordinatesPaint);
         for (int i = 0; i < numColumns; i++){
@@ -193,16 +208,16 @@ public class MapGrid extends View {
             }
             switch (obstacle.getSide()){
                 case 'N':
-                    canvas.drawRect(left, top, right, top + obstacleSideWidth, yellowPaint);
+                    canvas.drawRect(left, top, right, top + obstacleSideWidth, redPaint);
                     break;
                 case 'S':
-                    canvas.drawRect(left, bottom - obstacleSideWidth, right, bottom, yellowPaint);
+                    canvas.drawRect(left, bottom - obstacleSideWidth, right, bottom, redPaint);
                     break;
                 case 'E':
-                    canvas.drawRect(right - obstacleSideWidth, top, right, bottom, yellowPaint);
+                    canvas.drawRect(right - obstacleSideWidth, top, right, bottom, redPaint);
                     break;
                 case 'W':
-                    canvas.drawRect(left, top, left + obstacleSideWidth, bottom, yellowPaint);
+                    canvas.drawRect(left, top, left + obstacleSideWidth, bottom, redPaint);
                     break;
                 default:
                     break;
@@ -215,9 +230,9 @@ public class MapGrid extends View {
         //Bitmap bm = Bitmap.createBitmap(obstacleBitmap,0,0, obstacleBitmap.getWidth(), obstacleBitmap.getHeight(), matrix, true);
         //canvas.drawBitmap(bm, null, new RectF(offsetX + (sideBarLeft - 1) * cellWidth, offsetY + (numRows - obstacleBoxTop) * cellHeight, offsetX + sideBarRight * cellWidth,offsetY + (numRows - obstacleBoxBottom + 1) * cellHeight), null);
         canvas.drawBitmap(obstacleBitmap, null, new RectF(offsetX + sideBarLeft * cellWidth,
-                offsetY + (numRows - obstacleBoxTop) * cellHeight,
-                offsetX + sideBarRight * cellWidth,
-                offsetY + (numRows - obstacleBoxBottom) * cellHeight),
+                        offsetY + (numRows - obstacleBoxTop) * cellHeight,
+                        offsetX + sideBarRight * cellWidth,
+                        offsetY + (numRows - obstacleBoxBottom) * cellHeight),
                 null);
     }
 
@@ -251,10 +266,10 @@ public class MapGrid extends View {
                 // Touch robot on map
                 if (MainActivity.robot.containsCoordinate(initialX, initialY)){
                     objectToMove = MainActivity.robot;
-                // Robot not on map and touch robot button
+                    // Robot not on map and touch robot button
                 } else if ((MainActivity.robot.getX() == -1 || MainActivity.robot.getY() == -1) && (sideBarLeft <= initialX && initialX <= sideBarRight && robotBoxBottom <= initialY && initialY <= robotBoxTop)){
                     objectToMove = MainActivity.robot;
-                // Touch obstacle button
+                    // Touch obstacle button
                 } else if (sideBarLeft <= initialX && initialX <= sideBarRight && obstacleBoxBottom <= initialY && initialY <= obstacleBoxTop){
                     objectToMove = com.example.mdpgrp2.Map.getInstance().addObstacle();
                 } else {
@@ -274,6 +289,17 @@ public class MapGrid extends View {
                 if (objectToMove instanceof com.example.mdpgrp2.Robot){
                     if (checkIfRobotInMap(movingX, movingY, com.example.mdpgrp2.Robot.ROBOT_LENGTH)){
                         Log.d("MainActivity", "Moving coordinates= X:" + movingX +", Y:" + movingY);
+                        MainActivity ma = (MainActivity) this.getContext();
+                        /*
+                        try {
+                            JSONObject obj = new JSONObject();
+                            obj.put("type","origin");
+                            obj.put("payload",(int) (MainActivity.robot.getX()) + "," + (int) (MainActivity.robot.getY()) + "," + MainActivity.robot.getDirection());
+                            ma.outgoingMessage(obj.toString());
+                        } catch (JSONException e) {
+                            //some exception handler code.
+                        }*/
+
                         MainActivity.robot.setCoordinates(movingX, movingY);
                         MainActivity.updateRobotPositionText();
                         invalidate();
@@ -305,7 +331,15 @@ public class MapGrid extends View {
 
                         // Send new robot coordinates via bluetooth
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage("Robot " + ": (" + (int) (MainActivity.robot.getX()) + ", " + (int) (MainActivity.robot.getY()) + ")");
+                        //ma.outgoingMessage("Robot " + ": (" + (int) (MainActivity.robot.getX()) + ", " + (int) (MainActivity.robot.getY()) + ")");
+                        try {
+                            JSONObject obj = new JSONObject();
+                            obj.put("type","origin");
+                            obj.put("payload",(int) (MainActivity.robot.getX()) + "," + (int) (MainActivity.robot.getY()) + "," + MainActivity.robot.getDirection());
+                            ma.outgoingMessage(obj.toString());
+                        } catch (JSONException e) {
+                            //some exception handler code.
+                        }
                     }
                     else{
                         MainActivity.robot.reset();
@@ -316,14 +350,14 @@ public class MapGrid extends View {
                     if ((finalX < 0 || finalX > numColumns) || (finalY < 0 || finalY > numRows)){
                         com.example.mdpgrp2.Map.getInstance().removeObstacle((com.example.mdpgrp2.Obstacle) objectToMove);
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage("Removed Obstacle " + ((com.example.mdpgrp2.Obstacle) objectToMove).getNumber());
+                        //ma.outgoingMessage("Removed Obstacle " + ((com.example.mdpgrp2.Obstacle) objectToMove).getNumber());
                     } else {
                         // If finger is released at a square
                         if (!com.example.mdpgrp2.Map.getInstance().isOccupied(finalX, finalY, (com.example.mdpgrp2.Obstacle) objectToMove)) {
                             objectToMove.setCoordinates(finalX, finalY);
                         }
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage("Obstacle " + ((com.example.mdpgrp2.Obstacle) objectToMove).getNumber() + ": (" + (int) (objectToMove.getX()) + ", " + (int) (objectToMove.getY()) + ")");
+                        //ma.outgoingMessage("Obstacle " + ((com.example.mdpgrp2.Obstacle) objectToMove).getNumber() + ": (" + (int) (objectToMove.getX()) + ", " + (int) (objectToMove.getY()) + ")");
                     }
                     invalidate();
                 }
@@ -338,7 +372,7 @@ public class MapGrid extends View {
         obstacle.setSide(side);
         invalidate();
         MainActivity ma = (MainActivity) this.getContext();
-        ma.outgoingMessage("Obstacle " + obstacle.getNumber() + ": (" + obstacle.getX() + ", " + obstacle.getY() + "), " + obstacle.getSide());
+        //ma.outgoingMessage("Obstacle " + obstacle.getNumber() + ": (" + obstacle.getX() + ", " + obstacle.getY() + "), " + obstacle.getSide());
         //fragment.sendMsg("Obstacle " + obstacle.getNumber() + ": (" + obstacle.getX() + ", " + obstacle.getY() + "), " + obstacle.getSide());
     }
 
@@ -362,3 +396,4 @@ public class MapGrid extends View {
     }
 
 }
+

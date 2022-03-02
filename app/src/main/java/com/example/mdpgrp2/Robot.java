@@ -51,6 +51,10 @@ public class Robot implements ICoordinate{
         this.direction = direction;
     }
 
+    public char getDirection(){
+        return direction;
+    }
+
     public int getTheta(){
         return theta;
     }
@@ -132,3 +136,4 @@ public class Robot implements ICoordinate{
     }
 
 }
+

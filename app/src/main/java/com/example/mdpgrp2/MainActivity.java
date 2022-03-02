@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 //if(robot.getX()+30 != obstacle.getX()  && robot.getY()+30 != obstacle.getY()){
                 robot.moveRobotForward(1.0);
                 mapGrid.invalidate();
+                updateRobotPositionText();
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("type","movement");
@@ -176,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
                     //some exception handler code.
                 }
                 //Toast.makeText(MainActivity.this, "Move forward", Toast.LENGTH_SHORT).show();
-                updateRobotPositionText();
                 //}
             }
         });
@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 robot.moveRobotForward(-1.0);
                 mapGrid.invalidate();
+                updateRobotPositionText();
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("type","movement");
@@ -196,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
                     //some exception handler code.
                 }
                 //Toast.makeText(MainActivity.this, "Move backward", Toast.LENGTH_SHORT).show();
-                updateRobotPositionText();
             }
         });
 
@@ -206,16 +206,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 robot.moveRobotTurnLeft();
                 mapGrid.invalidate();
+                updateRobotPositionText();
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("type","movement");
                     obj.put("payload", "tl");
                     outgoingMessage(obj.toString()); // check if this is the correct message
+
+                    JSONObject objj = new JSONObject();
+                    objj.put("type","origin");
+                    objj.put("payload",(int)robot.getX() + "," + (int)robot.getY() + "," + robot.getDirection());
+                    outgoingMessage(objj.toString());
+
                 } catch (JSONException e) {
                     //some exception handler code.
                 }
                 //Toast.makeText(MainActivity.this, "Turn Left", Toast.LENGTH_SHORT).show();
-                updateRobotPositionText();
             }
         });
 
@@ -225,16 +231,27 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 robot.moveRobotTurnRight();
                 mapGrid.invalidate();
+                updateRobotPositionText();
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("type","movement");
                     obj.put("payload", "tr");
                     outgoingMessage(obj.toString()); // check if this is the correct message
+
+
+                    JSONObject objj = new JSONObject();
+                    objj.put("type","origin");
+                    objj.put("payload",(int)robot.getX() + "," + (int)robot.getY() + "," + robot.getDirection());
+                    outgoingMessage(objj.toString());
+
+
                 } catch (JSONException e) {
                     //some exception handler code.
                 }
+
+
                 //Toast.makeText(MainActivity.this, "Turn Right", Toast.LENGTH_SHORT).show();
-                updateRobotPositionText();
+
             }
         });
 
@@ -351,29 +368,32 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONObject objj = new JSONObject();
             JSONArray array = new JSONArray();
-        if(timerStarted2 == false){
-            StringBuilder msg = new StringBuilder();
-            ArrayList<Obstacle> obstacles = Map.getInstance().getObstacles();
-            if(obstacles.size() != 5){
-                Toast.makeText(MainActivity.this, obstacles.size() + " obstacles selected ",
-                        Toast.LENGTH_SHORT).show();
-            }
-            else{
-                boolean setDir = true;
-                StringBuilder unset = new StringBuilder();
-                char dir = ' ';
-                for (int i = 0; i < obstacles.size(); i++){
-                    if (i != 0){
-                        msg.append("|");
-                    }
-                    dir = obstacles.get(i).getSide();
-                    if (dir != 'N' && dir != 'S' && dir != 'E' && dir != 'W') {
-                        setDir = false;
-                        if (!unset.toString().equals("")) {
-                            unset.append(",");
+            if(timerStarted2 == false){
+                StringBuilder msg = new StringBuilder();
+                ArrayList<Obstacle> obstacles = Map.getInstance().getObstacles();
+                if(obstacles.size() > 9){
+                    Toast.makeText(MainActivity.this, obstacles.size() + " obstacles selected ",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    boolean setDir = true;
+                    StringBuilder unset = new StringBuilder();
+                    char dir = ' ';
+                    array.put("0" + "," + (int) robot.getX() + "," + (int)robot.getY() + "," + robot.getDirection());
+
+
+                    for (int i = 0; i < obstacles.size(); i++){
+                        if (i != 0){
+                            msg.append("|");
                         }
-                        unset.append(obstacles.get(i).getNumber());
-                    }
+                        dir = obstacles.get(i).getSide();
+                        if (dir != 'N' && dir != 'S' && dir != 'E' && dir != 'W') {
+                            setDir = false;
+                            if (!unset.toString().equals("")) {
+                                unset.append(",");
+                            }
+                            unset.append(obstacles.get(i).getNumber());
+                        }
                     /*
                     msg.append(obstacles.get(i).getNumber()).append(",")
                             .append((int) (obstacles.get(i).getX() )).append(",")
@@ -384,34 +404,34 @@ public class MainActivity extends AppCompatActivity {
                                 (int)obstacles.get(i).getX() + "," +
                                 (int)obstacles.get(i).getY()  + "," +
                                 obstacles.get(i).getSide());
-                }
-                if (setDir) {
-                    timerStarted2 = true;
-                    startButtonUI2("STOP", R.color.white);
-                    timerTxtUI("timerText2", R.color.nenonBlue);
-                    timerTVUI("Image Recognition",  R.color.oceanBreeze);
-                    //Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
+                    }
+                    if (setDir) {
+                        timerStarted2 = true;
+                        startButtonUI2("STOP", R.color.white);
+                        timerTxtUI("timerText2", R.color.nenonBlue);
+                        timerTVUI("Image Recognition",  R.color.oceanBreeze);
+                        //Toast.makeText(MainActivity.this, "Timer Stopped", Toast.LENGTH_SHORT).show();
 
-                    startTimer2();
+                        startTimer2();
 
-                    objj.put("type","coordinates");
-                    objj.put("payload",array);
-                    outgoingMessage(objj.toString());
-                }
-                else {
-                    Toast.makeText(MainActivity.this, unset + " side not selected",
-                            Toast.LENGTH_SHORT).show();
+                        objj.put("type","coordinates");
+                        objj.put("payload",array);
+                        outgoingMessage(objj.toString());
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, unset + " side not selected",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
-        }
-        else{
-            timerStarted2 = false;
-            startButtonUI2("START", R.color.blueWhite);
-            timerTxtUI("timerText2", R.color.fiery_coral);
-            timerTVUI("Image Recognition",  R.color.fiery_coral);
+            else{
+                timerStarted2 = false;
+                startButtonUI2("START", R.color.blueWhite);
+                timerTxtUI("timerText2", R.color.fiery_coral);
+                timerTVUI("Image Recognition",  R.color.fiery_coral);
 
-            timerTask2.cancel();
-        }
+                timerTask2.cancel();
+            }
         } catch (JSONException e) {
             //some exception handler code.
         }
@@ -642,15 +662,19 @@ public class MainActivity extends AppCompatActivity {
             txtY.setText(String.valueOf((int) (robot.getY())));
             switch (robot.getTheta()) {
                 case 0:
+                    robot.setDirection('N');
                     txtDir.setText("NORTH");
                     break;
                 case 90:
+                    robot.setDirection('E');
                     txtDir.setText("EAST");
                     break;
                 case 180:
+                    robot.setDirection('S');
                     txtDir.setText("SOUTH");
                     break;
                 case -90:
+                    robot.setDirection('W');
                     txtDir.setText("WEST");
                     break;
                 default:
@@ -683,3 +707,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+

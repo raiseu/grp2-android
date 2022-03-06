@@ -371,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
             if(timerStarted2 == false){
                 StringBuilder msg = new StringBuilder();
                 ArrayList<Obstacle> obstacles = Map.getInstance().getObstacles();
-                if(obstacles.size() > 9){
+                if(obstacles.size() > 8 || obstacles.size() < 4 ){
                     Toast.makeText(MainActivity.this, obstacles.size() + " obstacles selected ",
                             Toast.LENGTH_SHORT).show();
                 }

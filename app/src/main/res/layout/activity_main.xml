@@ -16,59 +16,66 @@
         app:layout_constraintBottom_toBottomOf="@id/coordinatorLayout"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mainlayout"
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_list"
+        android:paddingStart="5dp"
+        android:paddingEnd="10dp"
+        tools:context=".MainActivity"
+        tools:ignore="MissingConstraints">
+
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:id="@+id/konfettiView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/gradient_list"
-            android:paddingStart="5dp"
-            android:paddingEnd="10dp"
-            tools:context=".MainActivity"
-            tools:ignore="MissingConstraints">
+            android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/bluetoothTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_not_connected"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                />
+        <TextView
+            android:id="@+id/bluetoothTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/title_not_connected"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textViewX"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:text="@string/x"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
+        <TextView
+            android:id="@+id/textViewX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/x"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
 
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txtX"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="28dp"
-                android:text="-"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@id/textViewX"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txtX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="28dp"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/textViewX"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-            <!--
+        <!--
                         <TextView
                             android:id="@+id/directionTV"
                             android:layout_width="wrap_content"
@@ -81,190 +88,190 @@
                             app:layout_constraintTop_toBottomOf="@id/textViewX"
                             />
             -->
-            <!--app:layout_constraintLeft_toRightOf="@id/directionTV"/> -->
+        <!--app:layout_constraintLeft_toRightOf="@id/directionTV"/> -->
+
+        <TextView
+            android:id="@+id/textViewY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/y"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/txtX"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="28dp"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            app:layout_constraintLeft_toRightOf="@id/textViewY"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/map"
+            app:layout_constraintStart_toEndOf="@+id/textViewX"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.example.mdpgrp2.MapGrid
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintDimensionRatio="1.2:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reset" />
+
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="110dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/custom_button_pressed"
+            android:text="@string/reset"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:iconPadding="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints,Suspicious0dp" />
+
+        <LinearLayout
+            android:id="@+id/robotTV"
+            android:layout_width="620dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border_white_background"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/map">
 
             <TextView
-                android:id="@+id/textViewY"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="28dp"
-                android:text="@string/y"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@id/txtX"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtY"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="28dp"
-                android:text="-"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-
-                app:layout_constraintLeft_toRightOf="@id/textViewY"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtDirection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="30dp"
-                android:text="-"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/map"
-                app:layout_constraintStart_toEndOf="@+id/textViewX"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.example.mdpgrp2.MapGrid
-                android:id="@+id/map"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintDimensionRatio="1.2:1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/reset" />
-
-            <Button
-                android:id="@+id/reset"
-                android:layout_width="110dp"
-                android:layout_height="62dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="15dp"
-                android:text="@string/reset"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/custom_button_pressed"
-                android:textSize="20sp"
-                app:iconPadding="0dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints,Suspicious0dp" />
-
-            <LinearLayout
-                android:id="@+id/robotTV"
-                android:layout_width="620dp"
-                android:layout_height="78dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/border_white_background"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/map">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/robotStatus"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/txtRobotStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <FrameLayout
-                android:id="@+id/sample_content_fragment"
-                android:layout_width="620dp"
-                android:layout_height="315dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/border_white_background"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/robotTV">
-
-            </FrameLayout>
-
-
-            <LinearLayout
-                android:id="@+id/constraintButtons"
-                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/robotTV"
-                app:layout_constraintTop_toBottomOf="@+id/map"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:text="@string/robotStatus"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/txtRobotStatus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
 
-            </LinearLayout>
+        <FrameLayout
+            android:id="@+id/sample_content_fragment"
+            android:layout_width="620dp"
+            android:layout_height="315dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border_white_background"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/robotTV">
 
-            <RelativeLayout
-                android:id="@+id/buttons"
-                android:layout_width="244dp"
-                android:layout_height="221dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="48dp"
-                app:layout_constraintStart_toEndOf="@+id/sample_content_fragment"
-                app:layout_constraintTop_toBottomOf="@+id/map">
+        </FrameLayout>
 
-                <ImageButton
-                    android:id="@+id/btnRight"
-                    android:layout_width="74dp"
-                    android:layout_height="75dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="17dp"
-                    android:layout_marginBottom="80dp"
-                    android:background="@drawable/id_right_button_states"
-                    android:padding="0dp" />
 
-                <ImageButton
-                    android:id="@+id/btnDown"
-                    android:layout_width="78dp"
-                    android:layout_height="72dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="85dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/id_reverse_button_states" />
+        <LinearLayout
+            android:id="@+id/constraintButtons"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/robotTV"
+            app:layout_constraintTop_toBottomOf="@+id/map">
 
-                <ImageButton
-                    android:id="@+id/btnUp"
-                    android:layout_width="74dp"
-                    android:layout_height="71dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="89dp"
-                    android:layout_marginBottom="145dp"
-                    android:background="@drawable/id_forward_button_states" />
 
-                <ImageButton
-                    android:id="@+id/btnLeft"
-                    android:layout_width="76dp"
-                    android:layout_height="74dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="157dp"
-                    android:layout_marginBottom="80dp"
-                    android:background="@drawable/id_left_button_states" />
+        </LinearLayout>
 
-            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/buttons"
+            android:layout_width="244dp"
+            android:layout_height="221dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="48dp"
+            app:layout_constraintStart_toEndOf="@+id/sample_content_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/map">
 
-            <!--
+            <ImageButton
+                android:id="@+id/btnRight"
+                android:layout_width="74dp"
+                android:layout_height="75dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="17dp"
+                android:layout_marginBottom="80dp"
+                android:background="@drawable/id_right_button_states"
+                android:padding="0dp" />
+
+            <ImageButton
+                android:id="@+id/btnDown"
+                android:layout_width="78dp"
+                android:layout_height="72dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="85dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/id_reverse_button_states" />
+
+            <ImageButton
+                android:id="@+id/btnUp"
+                android:layout_width="74dp"
+                android:layout_height="71dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="89dp"
+                android:layout_marginBottom="145dp"
+                android:background="@drawable/id_forward_button_states" />
+
+            <ImageButton
+                android:id="@+id/btnLeft"
+                android:layout_width="76dp"
+                android:layout_height="74dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="157dp"
+                android:layout_marginBottom="80dp"
+                android:background="@drawable/id_left_button_states" />
+
+        </RelativeLayout>
+
+        <!--
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -277,9 +284,7 @@
                 />
             -->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout='@layout/bottomsheet' />
 

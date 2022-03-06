@@ -45,6 +45,10 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+
 public class MainActivity extends AppCompatActivity {
     private static BluetoothChatFragment fragment;
     //Toolbar bottomSheetToolbar;
@@ -79,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
     Double time = 0.0;
     Double time2 = 0.0;
 
+    //KonfettiView konfettiView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         startbutton2 = (Button) findViewById(R.id.startbutton2);
         fastestPT = (TextView) findViewById(R.id.fastestTV);
         imgRecT = (TextView) findViewById(R.id.ImageTV);
+
 
         timer = new Timer();
         timer2 = new Timer();
@@ -115,6 +122,25 @@ public class MainActivity extends AppCompatActivity {
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
 
 
+        //Konfetti
+        //konfettiView = findViewById(R.id.konfettiView);
+        /*
+        final KonfettiView konfettiView = findViewById(R.id.konfettiView);
+        konfettiView.setOnClickListener(view)-->{
+            konfettiView.build()
+                    .addColors(Color.WHITE, Color.GRAY, Color.BLUE)
+                    .setDirection(0.0, 359.0)
+                    .setSpeed(1f, 5f)
+                    .setFadeOutEnabled(true)
+                    .setTimeToLive(1000L)
+                    .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                    .addSizes(new Size(8, 4f))
+                    .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                    .streamFor(300, 5000L);
+
+
+        }
+*/
         // Remove shadow of action bar
         //getSupportActionBar().setElevation(0);
         // Define ActionBar object

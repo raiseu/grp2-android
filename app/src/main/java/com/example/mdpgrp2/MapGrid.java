@@ -6,12 +6,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,10 +49,13 @@ public class MapGrid extends View {
     private final Paint whiteNumberTwo = new Paint();
     private final Paint yellowPaint = new Paint();
     private final Paint greenPaint = new Paint();
+    private final Paint fieryPink  = new Paint();
+    private final Paint neonBluePaint = new Paint();
+    private final Paint electricBlue = new Paint();
 
     // Images
-    private final Bitmap robotBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.robo1);
-    private final Bitmap robotBoxBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.robo1_blank);
+    private final Bitmap robotBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.robotdrawn);
+    private final Bitmap robotBoxBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.robotshadow);
     private final Bitmap obstacleBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.obstacles);
 
     // Handle motion
@@ -62,6 +70,8 @@ public class MapGrid extends View {
     public static final int robotBoxTop = robotBoxBottom + 3;
     public static final int obstacleBoxTop = 16;
     public static final int obstacleBoxBottom = obstacleBoxTop - 3;
+
+    KonfettiView konfettiView;
 
     public MapGrid(Context context){
         this(context, null);
@@ -83,10 +93,19 @@ public class MapGrid extends View {
         whiteNumberTwo.setColor(Color.WHITE);
         whiteNumberTwo.setTextSize(35);
         whiteNumberTwo.setTextAlign(Paint.Align.CENTER);
+        yellowPaint.setColor(Color.RED);
+        fieryPink.setColor(Color.rgb(255,0, 127));
         redPaint.setColor(Color.RED);
-        yellowPaint.setColor(Color.rgb(255,253,141));
+        //yellowPaint.setColor(Color.rgb(255,253,141));
         greenPaint.setColor(Color.rgb(0, 153, 51));
+        neonBluePaint.setColor(Color.rgb(17,255,238));
+        electricBlue.setColor(Color.rgb(122, 215, 240));
     }
+
+
+    /*Paint paint = new Paint();
+    Rect r = new Rect(70, 739, 249, 918);*/
+    RectF rectF = new RectF(70, 739, 249, 918);
 
     @Override
     protected void onDraw(Canvas canvas){
@@ -94,6 +113,10 @@ public class MapGrid extends View {
         calculateDimensions();
         // draw white area of canvas
         canvas.drawRoundRect(border, border, width - border - sidebar, height - border, 20, 20, whitePaint);
+
+        /*paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.rgb(137, 207, 240));
+        canvas.drawRect(r, paint);*/
         // draw start Area
         drawStartArea(canvas);
         // draw grid lines and coordinates
@@ -109,7 +132,7 @@ public class MapGrid extends View {
     }
     private void drawStartArea(Canvas canvas) {
         int width = 4;
-        canvas.drawRect(offsetX, offsetY + (numRows - width) * cellHeight, offsetX + width * cellWidth, offsetY + numRows * cellHeight, yellowPaint);
+        canvas.drawRect(offsetX, offsetY + (numRows - width) * cellHeight, offsetX + width * cellWidth, offsetY + numRows * cellHeight, electricBlue);
     }
 
     private void calculateDimensions(){
@@ -175,6 +198,7 @@ public class MapGrid extends View {
         }
 
         canvas.drawBitmap(rotatedBitmap, offsetX + cellWidth * (float) left, offsetY + cellHeight * (numRows - (float) top), null);
+
     }
 
     private double findRobotXAfterRotation(float x, double dX, double dY, double radian){
@@ -200,6 +224,20 @@ public class MapGrid extends View {
                 canvas.drawText(String.valueOf(obstacle.getTargetID()),
                         (float) (left + 0.5 * cellWidth),
                         (float) (top + (cellHeight - textSize)/2 + 1 + textSize), whiteNumberTwo);
+
+                konfettiView = findViewById(R.id.konfettiView);
+                konfettiView.build()
+                        .addColors(Color.WHITE, Color.GRAY, Color.BLUE)
+                        .setDirection(0.0, 359.0)
+                        .setSpeed(1f, 5f)
+                        .setFadeOutEnabled(true)
+                        .setTimeToLive(1000L)
+                        .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                        .addSizes(new Size(8, 4f))
+                        .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                        .streamFor(300, 5000L);
+
+
             } else{
                 canvas.drawRect(left, top, right, bottom, blackPaint);
                 canvas.drawText(String.valueOf(obstacle.getNumber()),

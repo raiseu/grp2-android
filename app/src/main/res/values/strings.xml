@@ -1,6 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- UI items-->
-    <string name="app_name">MDP Grp 2</string>
+    <string name="app_name">MDP GRP 2</string>
     <string name="bluetooth">Bluetooth Connection</string>
     <string name="position">Position</string>
     <string name="direction">Direction : </string>

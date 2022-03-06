@@ -33,7 +33,12 @@
         <entry key="..\:/Users/Neena/StudioProjects/CZ3002/app/src/main/res/layout/obstacle_popup_window.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3002/app/src/main/res/menu/main.xml" value="0.17916666666666667" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3002/app/src/main/res/menu/main_menu.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable-anydpi/ic_back.xml" value="0.173828125" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable-anydpi/ic_down_arrow.xml" value="0.1" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable-anydpi/ic_left_arrow.xml" value="0.1" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable-anydpi/ic_right_arrow.xml" value="0.173828125" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable-anydpi/ic_up_arrow.xml" value="0.173828125" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable-xhdpi/grey_box.xml" value="0.18310546875" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/border_white_background.xml" value="0.18310546875" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/custom_bs_reset_button.xml" value="0.126953125" />
@@ -64,8 +69,8 @@
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/id_right_button_states.xml" value="0.1240234375" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/drawable/reverse_button.xml" value="0.14973958333333334" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/activity_device_list.xml" value="0.1533203125" />
-        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/bottomsheet.xml" value="0.1" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/activity_main.xml" value="0.22333333333333336" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/bottomsheet.xml" value="0.25" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/device_name.xml" value="0.1533203125" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/dialog_timer.xml" value="0.267578125" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/fragment_bluetooth_chat.xml" value="0.16796875" />
@@ -80,6 +85,8 @@
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/layout/obstacle_popup_window.xml" value="0.3666666666666667" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/menu/main.xml" value="0.16510416666666666" />
         <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/menu/main_menu.xml" value="0.16510416666666666" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.12451171875" />
+        <entry key="..\:/Users/Neena/StudioProjects/CZ3004/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.12451171875" />
       </map>
     </option>
   </component>

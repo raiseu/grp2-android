@@ -642,7 +642,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.d("string", msg[finalI] + " + " + msg[finalI].length());
-                    if(msg[finalI].length() >= 5){
+                    if(msg[finalI].length() >= 5 && !msg[finalI].contains("]") && !msg[finalI].contains("[")){
                         char dir = ' ';
                         String[] coord = msg[finalI].split(",");
                         float x = Float.parseFloat(coord[0]);

@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -45,9 +47,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import nl.dionsegijn.konfetti.KonfettiView;
-import nl.dionsegijn.konfetti.models.Shape;
-import nl.dionsegijn.konfetti.models.Size;
+//import nl.dionsegijn.konfetti.KonfettiView;
+//import nl.dionsegijn.konfetti.models.Shape;
+//import nl.dionsegijn.konfetti.models.Size;
 
 public class MainActivity extends AppCompatActivity {
     private static BluetoothChatFragment fragment;
@@ -194,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 robot.moveRobotForward(1.0);
                 mapGrid.invalidate();
                 updateRobotPositionText();
+                /*
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("type","movement");
@@ -201,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                     outgoingMessage(obj.toString()); // check if this is the correct message
                 } catch (JSONException e) {
                     //some exception handler code.
-                }
+                }*/
                 //Toast.makeText(MainActivity.this, "Move forward", Toast.LENGTH_SHORT).show();
                 //}
             }
@@ -214,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 robot.moveRobotForward(-1.0);
                 mapGrid.invalidate();
                 updateRobotPositionText();
+                /*
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("type","movement");
@@ -221,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                     outgoingMessage(obj.toString()); // check if this is the correct message
                 } catch (JSONException e) {
                     //some exception handler code.
-                }
+                }*/
                 //Toast.makeText(MainActivity.this, "Move backward", Toast.LENGTH_SHORT).show();
             }
         });
@@ -233,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 robot.moveRobotTurnLeft();
                 mapGrid.invalidate();
                 updateRobotPositionText();
+                /*
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("type","movement");
@@ -247,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     //some exception handler code.
                 }
+                */
                 //Toast.makeText(MainActivity.this, "Turn Left", Toast.LENGTH_SHORT).show();
             }
         });
@@ -258,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 robot.moveRobotTurnRight();
                 mapGrid.invalidate();
                 updateRobotPositionText();
+                /*
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("type","movement");
@@ -274,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     //some exception handler code.
                 }
-
+                */
 
                 //Toast.makeText(MainActivity.this, "Turn Right", Toast.LENGTH_SHORT).show();
 
@@ -625,6 +632,53 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public static int setRobotPositionArray(String array) {
+        String[] msg = array.split("'");
+        Handler handler1 = new Handler();
+        for(int i=0; i<msg.length;i++){
+            int finalI = i;
+            handler1.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("string", msg[finalI] + " + " + msg[finalI].length());
+                    if(msg[finalI].length() >= 5){
+                        char dir = ' ';
+                        String[] coord = msg[finalI].split(",");
+                        float x = Float.parseFloat(coord[0]);
+                        float y = Float.parseFloat(coord[1]);
+                        float theta = Float.parseFloat(coord[2]);
+                        Log.d("content", String.valueOf(x) + "," + String.valueOf(y) + "," + String.valueOf(theta));
+                        if (0 <= x && x <= 19 && 0 <= y && y <= 19) {
+                            x = (float) (x + 0.5);
+                            y = (float) (y + 0.5);
+                            robot.setCoordinates(x, y);
+                            if(theta == 0){
+                                dir = 'N';
+                                robot.setTheta(90);
+                            }else if(theta == 90){
+                                dir = 'E';
+                                robot.setTheta(0);
+                            }else if(theta == 180){
+                                dir = 'W';
+                                robot.setTheta(-90);
+                            }else if(theta == 270){
+                                dir = 'S';
+                                robot.setTheta(180);
+                            }
+                            robot.setDirection(dir);
+                            updateRobotPositionText();
+                            mapGrid.invalidate();
+                        }
+                    }
+                }
+                //200 = 0.2seconds
+            }, 200 * i);
+        }
+
+        return 0;
+    }
+
 
 
     // Set robot position based on bluetooth string received

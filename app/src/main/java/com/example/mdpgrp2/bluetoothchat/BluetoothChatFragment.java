@@ -346,11 +346,16 @@ public class BluetoothChatFragment extends Fragment {
                     boolean messageIsCommand = false;
                     if (readMessage.split(",")[0].equals("ROBOT")){
                         String[] splitString = readMessage.split(",");
+                        /*
                         if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1){
                             if (MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0))){
                                 messageIsCommand = true;
                             }
-                        } else if (splitString.length == 2){
+                         */
+
+                        //MainActivity.setRobotPositionArray(readMessage);
+                        messageIsCommand = true;
+                        if (splitString.length == 2){
                             MainActivity.updateRobotStatus(splitString[1]);
                             messageIsCommand = true;
                         }
@@ -361,6 +366,8 @@ public class BluetoothChatFragment extends Fragment {
                                 messageIsCommand = true;
                             }
                         }
+                    }else{
+                        MainActivity.setRobotPositionArray(readMessage);
                     }
                     if (!messageIsCommand){
                         mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);

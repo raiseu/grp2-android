@@ -14,9 +14,9 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import nl.dionsegijn.konfetti.KonfettiView;
-import nl.dionsegijn.konfetti.models.Shape;
-import nl.dionsegijn.konfetti.models.Size;
+//import nl.dionsegijn.konfetti.KonfettiView;
+//import nl.dionsegijn.konfetti.models.Shape;
+//import nl.dionsegijn.konfetti.models.Size;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,7 +71,7 @@ public class MapGrid extends View {
     public static final int obstacleBoxTop = 16;
     public static final int obstacleBoxBottom = obstacleBoxTop - 3;
 
-    KonfettiView konfettiView;
+    //KonfettiView konfettiView;
 
     public MapGrid(Context context){
         this(context, null);
@@ -225,6 +225,7 @@ public class MapGrid extends View {
                         (float) (left + 0.5 * cellWidth),
                         (float) (top + (cellHeight - textSize)/2 + 1 + textSize), whiteNumberTwo);
 
+                /*
                 konfettiView = findViewById(R.id.konfettiView);
                 konfettiView.build()
                         .addColors(Color.WHITE, Color.GRAY, Color.BLUE)
@@ -236,7 +237,7 @@ public class MapGrid extends View {
                         .addSizes(new Size(8, 4f))
                         .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
                         .streamFor(300, 5000L);
-
+                */
 
             } else{
                 canvas.drawRect(left, top, right, bottom, blackPaint);

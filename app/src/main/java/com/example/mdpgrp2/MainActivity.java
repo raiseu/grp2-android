@@ -302,8 +302,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     // fastest path
     public void resetTapped(View view)
     {
@@ -520,6 +518,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         time++;
+
                         timerText.setText(getTimerTask());
 
                     }
@@ -539,12 +538,20 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         time2++;
+                        Log.d("timer", getTimerTask2());
                         timerText2.setText(getTimerTask2());
-
+                        if (getTimerTask2().equals("00 : 05 : 30")){
+                            JSONObject obj = new JSONObject();
+                            try {
+                                obj.put("type","terminate");
+                                obj.put("payload","terminate");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            outgoingMessage(obj.toString());
+                        }
                     }
                 });
-
-
             }
         };
         timer2.scheduleAtFixedRate(timerTask2, 0, 1000); // 1000ms = 1s

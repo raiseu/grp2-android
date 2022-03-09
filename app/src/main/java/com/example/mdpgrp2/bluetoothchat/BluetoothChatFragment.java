@@ -366,8 +366,9 @@ public class BluetoothChatFragment extends Fragment {
                                 messageIsCommand = true;
                             }
                         }
-                    }else{
+                    }else if(readMessage.contains("[")){
                         MainActivity.setRobotPositionArray(readMessage);
+                        messageIsCommand = true;
                     }
                     if (!messageIsCommand){
                         mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);

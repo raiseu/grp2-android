@@ -229,8 +229,6 @@ public class MapGrid extends View {
                         (float) (left + 0.5 * cellWidth),
                         (float) (top + (cellHeight - textSize)/2 + 1 + textSize), whiteNumberTwo);
 
-                MainActivity.getmInstanceActivity().confetti();
-
             } else{
                 canvas.drawRect(left, top, right, bottom, blackPaint);
                 canvas.drawText(String.valueOf(obstacle.getNumber()),
@@ -363,6 +361,7 @@ public class MapGrid extends View {
                         // Send new robot coordinates via bluetooth
                         MainActivity ma = (MainActivity) this.getContext();
                         //ma.outgoingMessage("Robot " + ": (" + (int) (MainActivity.robot.getX()) + ", " + (int) (MainActivity.robot.getY()) + ")");
+                        /*
                         try {
                             JSONObject obj = new JSONObject();
                             obj.put("type","origin");
@@ -371,6 +370,7 @@ public class MapGrid extends View {
                         } catch (JSONException e) {
                             //some exception handler code.
                         }
+                        */
                     }
                     else{
                         MainActivity.robot.reset();

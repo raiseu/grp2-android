@@ -349,30 +349,24 @@ public class BluetoothChatFragment extends Fragment {
                         /*
                         if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1){
                             if (MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0))){
-                                messageIsCommand = true;
                             }
                          */
-
                         //MainActivity.setRobotPositionArray(readMessage);
-                        messageIsCommand = true;
                         if (splitString.length == 2){
-                            MainActivity.updateRobotStatus(splitString[1]);
-                            messageIsCommand = true;
+                            MainActivity.updateRobotStatus(splitString[1]);;
                         }
                     } else if (readMessage.split(",")[0].equals("TARGET")){
                         String[] splitString = readMessage.split(",");
                         if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])){
-                            if (MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]))){
-                                messageIsCommand = true;
-                            }
+                            MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]));
+                            MainActivity.getmInstanceActivity().confetti();
                         }
                     }else if(readMessage.contains("[")){
+                        Log.d("in" ,readMessage);
                         MainActivity.setRobotPositionArray(readMessage);
-                        messageIsCommand = true;
                     }
-                    if (!messageIsCommand){
-                        mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
-                    }
+                    mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
+
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name

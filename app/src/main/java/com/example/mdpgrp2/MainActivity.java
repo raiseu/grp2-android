@@ -43,9 +43,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 //import nl.dionsegijn.konfetti.KonfettiView;
 //import nl.dionsegijn.konfetti.models.Shape;
@@ -85,12 +90,19 @@ public class MainActivity extends AppCompatActivity {
     Double time = 0.0;
     Double time2 = 0.0;
 
-    //KonfettiView konfettiView;
+    KonfettiView konfettiView;
+    public static WeakReference<MainActivity> weakActivity;
 
+    public static MainActivity getmInstanceActivity() {
+        return weakActivity.get();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        weakActivity = new WeakReference<>(MainActivity.this);
 
         //bottomSheetToolbar = (Toolbar) this.findViewById(R.id.toolbar);
 
@@ -784,6 +796,21 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    public void confetti() {
+        konfettiView = findViewById(R.id.konfettiView);
+        konfettiView.build()
+                .addColors(Color.WHITE, Color.YELLOW, Color.BLUE, Color.rgb(255,0, 127), Color.rgb(255,93,61))
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(1000L)
+                .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                .addSizes(new Size(8, 4f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 5000L);
+
     }
 
 }

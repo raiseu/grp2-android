@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -103,9 +104,12 @@ public class MapGrid extends View {
     }
 
 
+
+
     /*Paint paint = new Paint();
     Rect r = new Rect(70, 739, 249, 918);*/
     RectF rectF = new RectF(70, 739, 249, 918);
+
 
     @Override
     protected void onDraw(Canvas canvas){
@@ -225,19 +229,7 @@ public class MapGrid extends View {
                         (float) (left + 0.5 * cellWidth),
                         (float) (top + (cellHeight - textSize)/2 + 1 + textSize), whiteNumberTwo);
 
-                /*
-                konfettiView = findViewById(R.id.konfettiView);
-                konfettiView.build()
-                        .addColors(Color.WHITE, Color.GRAY, Color.BLUE)
-                        .setDirection(0.0, 359.0)
-                        .setSpeed(1f, 5f)
-                        .setFadeOutEnabled(true)
-                        .setTimeToLive(1000L)
-                        .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
-                        .addSizes(new Size(8, 4f))
-                        .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
-                        .streamFor(300, 5000L);
-                */
+                MainActivity.getmInstanceActivity().confetti();
 
             } else{
                 canvas.drawRect(left, top, right, bottom, blackPaint);

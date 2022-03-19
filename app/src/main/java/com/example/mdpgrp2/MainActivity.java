@@ -387,8 +387,8 @@ public class MainActivity extends AppCompatActivity {
             //outgoingMessage("START");
             try {
                 JSONObject obj = new JSONObject();
-                obj.put("type","instruction");
-                obj.put("payload", "start");
+                obj.put("type","start");
+                obj.put("payload", "S");
                 outgoingMessage(obj.toString()); // check if this is the correct message
             } catch (JSONException e) {
                 //some exception handler code.
